@@ -13,6 +13,13 @@ func TakePotion(c *characters.Character) {
 		c.HP = c.MaxHP
 	}
 
-	fmt.Println("Vous utilisez une potion de soin !")
+	for i, object := range c.Inventory {
+		if object == "Potion de vie" {
+			c.Inventory = append(c.Inventory[:i], c.Inventory[i+1:]...)
+			break
+		}
+	}
+
+	fmt.Println("Vous utilisez une potion de vie !")
 	fmt.Printf("PV : %d / %d\n", c.HP, c.MaxHP)
 }
