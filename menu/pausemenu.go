@@ -44,8 +44,8 @@ func menu(p characters.Character) {
 	case '2':
 		showinfo.DisplayInventory(p)
 	case '3':
-		fmt.Println("Au revoir !")
-		os.Exit(0)
+		fmt.Println("A bientot!")
+		return
 	default:
 		fmt.Println("Choix invalide")
 	}

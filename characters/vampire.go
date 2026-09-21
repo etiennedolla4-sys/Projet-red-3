@@ -9,6 +9,7 @@ func NewVampire(name string) Vampire {
 		Character{
 			Name:         name,
 			Class:        "Vampire",
+			Description:  "Truc",
 			HP:           60,
 			MP:           10,
 			BaseAttack:   20,
