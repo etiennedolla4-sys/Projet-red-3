@@ -7,7 +7,7 @@ import (
 	"golang.org/x/term"
 )
 
-func main() {
+func PauseMenu() {
 	oldState, _ := term.MakeRaw(int(os.Stdin.Fd()))
 	defer term.Restore(int(os.Stdin.Fd()), oldState)
 
@@ -26,6 +26,7 @@ func main() {
 
 func menu() {
 	var choix [1]byte
+	var in_menu bool = true
 
 	fmt.Println("\n=== MENU  PAUSE ===")
 	fmt.Println("1. Afficher les informations du personnage")
@@ -41,7 +42,7 @@ func menu() {
 	case '2':
 		fmt.Println("Inventaire")
 	case '3':
-		fmt.Println("Au revoir !")
+		in_menu = false
 		os.Exit(0)
 	default:
 		fmt.Println("Choix invalide")

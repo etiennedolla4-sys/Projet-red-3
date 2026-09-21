@@ -20,6 +20,7 @@ func NewVampire(name string) Vampire {
 			MaxMP:        100,
 			Crit:         0,
 			Lvl:          1,
+			Gold: 			
 		},
 	}
 }

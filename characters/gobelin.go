@@ -21,6 +21,7 @@ func NewGobelin(name string) Gobelin {
 			MaxMP:        0,
 			Crit:         0,
 			Lvl:          1,
+			Gold:         120,
 		},
 	}
 }
