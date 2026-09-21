@@ -4,10 +4,11 @@ type Gobelin struct {
 	Character
 }
 
-func NewGobelin() Gobelin {
+func NewGobelin(name string) Gobelin {
 	return Gobelin{
 		Character{
-			Name:         "Gobelin",
+			Name:         name,
+			Class:        "Gobelin",
 			Description:  "Truc",
 			HP:           50,
 			MP:           0,

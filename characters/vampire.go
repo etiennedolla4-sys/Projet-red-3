@@ -4,10 +4,11 @@ type Vampire struct {
 	Character
 }
 
-func NewVampire() Vampire {
+func NewVampire(name string) Vampire {
 	return Vampire{
 		Character{
-			Name:         "Vampire",
+			Name:         name,
+			Class:        "Vampire",
 			HP:           60,
 			MP:           10,
 			BaseAttack:   20,

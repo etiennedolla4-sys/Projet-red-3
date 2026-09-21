@@ -2,6 +2,7 @@ package characters
 
 type Character struct {
 	Name         string
+	Class        string
 	Description  string
 	HP           int
 	MP           int
