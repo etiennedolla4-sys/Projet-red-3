@@ -2,9 +2,10 @@ package characters
 
 type Character struct {
 	Name         string
+	Class        string
 	Description  string
 	HP           int
-	Mana         int
+	MP           int
 	BaseAttack   int
 	BaseDefense  int
 	Initiative   int
