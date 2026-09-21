@@ -10,7 +10,7 @@ func NewGobelin() Gobelin {
 			Name:         "Gobelin",
 			Description:  "Truc",
 			HP:           50,
-			Mana:         0,
+			MP:           0,
 			BaseAttack:   20,
 			BaseDefense:  5,
 			Initiative:   5,

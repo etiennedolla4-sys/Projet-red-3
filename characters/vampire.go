@@ -9,7 +9,7 @@ func NewVampire() Vampire {
 		Character{
 			Name:         "Vampire",
 			HP:           60,
-			Mana:         10,
+			MP:           10,
 			BaseAttack:   20,
 			BaseDefense:  10,
 			Initiative:   3,
