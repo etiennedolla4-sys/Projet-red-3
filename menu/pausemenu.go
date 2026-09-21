@@ -4,10 +4,13 @@ import (
 	"fmt"
 	"os"
 
+	"Projet-red-3/characters"
+	"Projet-red-3/showinfo"
+
 	"golang.org/x/term"
 )
 
-func PauseMenu() {
+func DetecP(p characters.Character) {
 	oldState, _ := term.MakeRaw(int(os.Stdin.Fd()))
 	defer term.Restore(int(os.Stdin.Fd()), oldState)
 
@@ -18,17 +21,16 @@ func PauseMenu() {
 		os.Stdin.Read(touche[:])
 
 		if touche[0] == 'p' || touche[0] == 'P' {
-			menu()
+			menu(p)
 			fmt.Println("\nAppuyez sur P pour ouvrir le menu.")
 		}
 	}
 }
 
-func menu() {
+func menu(p characters.Character) {
 	var choix [1]byte
-	var in_menu bool = true
 
-	fmt.Println("\n=== MENU  PAUSE ===")
+	fmt.Println("\n=== MENU PAUSE ===")
 	fmt.Println("1. Afficher les informations du personnage")
 	fmt.Println("2. Accéder au contenu de l'inventaire")
 	fmt.Println("3. Quitter")
@@ -38,12 +40,12 @@ func menu() {
 
 	switch choix[0] {
 	case '1':
-		fmt.Println("Informations du personnage")
+		showinfo.DisplayInfo(p)
 	case '2':
-		fmt.Println("Inventaire")
+		showinfo.DisplayInventory(p)
 	case '3':
-		in_menu = false
-		os.Exit(0)
+		fmt.Println("A bientot!")
+		return
 	default:
 		fmt.Println("Choix invalide")
 	}
