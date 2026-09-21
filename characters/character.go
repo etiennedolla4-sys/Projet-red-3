@@ -15,4 +15,5 @@ type Character struct {
 	MaxMP        int
 	Crit         int
 	Lvl          int
+	Gold         int
 }
