@@ -10,7 +10,7 @@ import (
 	"golang.org/x/term"
 )
 
-func Main(p characters.Character) {
+func DetecP(p characters.Character) {
 	oldState, _ := term.MakeRaw(int(os.Stdin.Fd()))
 	defer term.Restore(int(os.Stdin.Fd()), oldState)
 
@@ -42,7 +42,7 @@ func menu(p characters.Character) {
 	case '1':
 		showinfo.DisplayInfo(p)
 	case '2':
-		fmt.Println("Inventaire")
+		showinfo.DisplayInventory(p)
 	case '3':
 		fmt.Println("Au revoir !")
 		os.Exit(0)

@@ -21,7 +21,8 @@ func StartMenu() {
 
 	switch choice {
 	case 1:
-		game.Init()
+		p := game.Init()
+		DetecP(p)
 	case 2:
 		save.Load()
 	case 3:
