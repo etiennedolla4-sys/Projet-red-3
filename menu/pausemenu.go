@@ -11,14 +11,19 @@ import (
 )
 
 func DetecP(p characters.Character) {
-	oldState, _ := term.MakeRaw(int(os.Stdin.Fd()))
-	defer term.Restore(int(os.Stdin.Fd()), oldState)
-
 	fmt.Println("Appuyez sur P pour ouvrir le menu.")
 
 	for {
+		oldState, err := term.MakeRaw(int(os.Stdin.Fd()))
+		if err != nil {
+			fmt.Println("Erreur terminal :", err)
+			return
+		}
+
 		var touche [1]byte
 		os.Stdin.Read(touche[:])
+
+		term.Restore(int(os.Stdin.Fd()), oldState)
 
 		if touche[0] == 'p' || touche[0] == 'P' {
 			menu(p)
@@ -28,6 +33,12 @@ func DetecP(p characters.Character) {
 }
 
 func menu(p characters.Character) {
+	oldState, err := term.MakeRaw(int(os.Stdin.Fd()))
+	if err != nil {
+		return
+	}
+	defer term.Restore(int(os.Stdin.Fd()), oldState)
+
 	var choix [1]byte
 
 	fmt.Println("\n=== MENU PAUSE ===")
@@ -45,8 +56,5 @@ func menu(p characters.Character) {
 		showinfo.DisplayInventory(p)
 	case '3':
 		fmt.Println("A bientot!")
-		return
-	default:
-		fmt.Println("Choix invalide")
 	}
 }
