@@ -40,26 +40,19 @@ func CharCreation() characters.Character {
 
 	var p characters.Character
 
-	p.Name = name
-	p.Lvl = 1
-	p.HP = 50
-	p.MP = 0
-	p.Inventory = []string{}
-	p.MaxInventory = 10
-	p.Skills = []string{"Coup de poing"}
-
 	switch classe {
 	case 1:
-		p.Class = "Gobelin"
-		p.MaxHP = 100
+		gobelin := characters.NewGobelin(name)
+		p = gobelin.Character
 
 	case 2:
-		p.Class = "Vampire"
-		p.MaxHP = 80
+		vampire := characters.NewVampire(name)
+		p = vampire.Character
 
+	default:
+		fmt.Println("Choix invalide")
+		return CharCreation()
 	}
-
-	p.HP = p.MaxHP / 2
 
 	return p
 }
