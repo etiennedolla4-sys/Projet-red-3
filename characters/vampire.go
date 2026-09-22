@@ -22,6 +22,7 @@ func NewVampire(name string) Vampire {
 			Crit:         0,
 			Lvl:          1,
 			Gold:         100,
+			Skills:       []string{"Coup de poing", "Saignée"},
 		},
 	}
 }

@@ -1,10 +1,10 @@
 package showinfo
 
 import (
-	"fmt"
-
 	"Projet-red-3/characters"
 	"Projet-red-3/item"
+	"Projet-red-3/sort"
+	"fmt"
 )
 
 func DisplayInventory(p *characters.Character) {
@@ -28,10 +28,22 @@ func DisplayInventory(p *characters.Character) {
 		switch p.Inventory[choice-1] {
 		case "Potion de vie":
 			item.TakePotion(p)
+
 		case "Potion de mana":
 			item.TakeManaPotion(p)
+
 		case "Potion de poison":
 			item.TakePoisonPotion(p)
+
+		case "Livre de Sort : Boule de Feu":
+			sort.SpellBook(p)
+
+			for i, object := range p.Inventory {
+				if object == "Livre de Sort : Boule de Feu" {
+					p.Inventory = append(p.Inventory[:i], p.Inventory[i+1:]...)
+					break
+				}
+			}
 		}
 	}
 }
