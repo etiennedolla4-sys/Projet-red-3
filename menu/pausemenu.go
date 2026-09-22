@@ -35,7 +35,8 @@ func menu(p *characters.Character) {
 	fmt.Println("1. Afficher les informations du personnage")
 	fmt.Println("2. Accéder au contenu de l'inventaire")
 	fmt.Println("3. Marchand")
-	fmt.Println("4. Quitter")
+	fmt.Println("4. Forgeron")
+	fmt.Println("5. Quitter")
 	fmt.Print("Votre choix : ")
 
 	os.Stdin.Read(choix[:])
@@ -51,6 +52,9 @@ func menu(p *characters.Character) {
 		personnage.Merchant(p)
 
 	case '4':
+		personnage.Blacksmith(p)
+
+	case '5':
 		fmt.Println("Au revoir !")
 		os.Exit(0)
 

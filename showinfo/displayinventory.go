@@ -10,8 +10,12 @@ import (
 func DisplayInventory(p *characters.Character) {
 	fmt.Println("\n=== INVENTAIRE DU PERSONNAGE ===")
 
-	for i, object := range p.Inventory {
-		fmt.Printf("%d. %s\n", i+1, object)
+	if len(p.Inventory) == 0 {
+		fmt.Println("Votre inventaire est vide.")
+	} else {
+		for i, object := range p.Inventory {
+			fmt.Printf("%d. %s\n", i+1, object)
+		}
 	}
 
 	fmt.Println("0. Retour")
@@ -26,6 +30,7 @@ func DisplayInventory(p *characters.Character) {
 
 	if choice > 0 && choice <= len(p.Inventory) {
 		switch p.Inventory[choice-1] {
+
 		case "Potion de vie":
 			item.TakePotion(p)
 
@@ -44,6 +49,15 @@ func DisplayInventory(p *characters.Character) {
 					break
 				}
 			}
+
+		case "Chapeau de l'aventurier":
+			item.EquipItem(p, p.Inventory[choice-1])
+
+		case "Tunique de l'aventurier":
+			item.EquipItem(p, p.Inventory[choice-1])
+
+		case "Bottes de l'aventurier":
+			item.EquipItem(p, p.Inventory[choice-1])
 		}
 	}
 }
