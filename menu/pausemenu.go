@@ -1,16 +1,17 @@
 package menu
 
 import (
+	"fmt"
+	"os"
+
 	"Projet-red-3/characters"
 	"Projet-red-3/personnage"
 	"Projet-red-3/showinfo"
-	"fmt"
-	"os"
 
 	"golang.org/x/term"
 )
 
-func DetecP(p characters.Character) {
+func DetecP(p *characters.Character) {
 	oldState, _ := term.MakeRaw(int(os.Stdin.Fd()))
 	defer term.Restore(int(os.Stdin.Fd()), oldState)
 
@@ -27,25 +28,27 @@ func DetecP(p characters.Character) {
 	}
 }
 
-func menu(p characters.Character) {
+func menu(p *characters.Character) {
 	var choix [1]byte
 
+	fmt.Println("\n=== MENU PAUSE ===")
 	fmt.Println("1. Afficher les informations du personnage")
 	fmt.Println("2. Accéder au contenu de l'inventaire")
 	fmt.Println("3. Marchand")
 	fmt.Println("4. Quitter")
+	fmt.Print("Votre choix : ")
 
 	os.Stdin.Read(choix[:])
 
 	switch choix[0] {
 	case '1':
-		showinfo.DisplayInfo(p)
+		showinfo.DisplayInfo(*p)
 
 	case '2':
-		showinfo.DisplayInventory(&p)
+		showinfo.DisplayInventory(p)
 
 	case '3':
-		personnage.Merchant(&p)
+		personnage.Merchant(p)
 
 	case '4':
 		fmt.Println("Au revoir !")

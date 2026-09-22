@@ -22,7 +22,7 @@ func StartMenu() {
 	switch choice {
 	case 1:
 		p := game.CharCreation()
-		DetecP(p)
+		DetecP(&p)
 
 	case 2:
 		save.Load()
