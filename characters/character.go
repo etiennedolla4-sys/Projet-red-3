@@ -16,4 +16,5 @@ type Character struct {
 	Crit         int
 	Lvl          int
 	Gold         int
+	Skills       []string
 }

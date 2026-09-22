@@ -1,10 +1,11 @@
 package item
 
 import (
+	"Projet-red-3/characters"
+
+	"Projet-red-3/save"
 	"fmt"
 	"time"
-
-	"Projet-red-3/characters"
 )
 
 func TakePoisonPotion(c *characters.Character) {
@@ -26,5 +27,6 @@ func TakePoisonPotion(c *characters.Character) {
 		}
 
 		fmt.Printf("PV : %d / %d\n", c.HP, c.MaxHP)
+		save.Dead(c)
 	}
 }
