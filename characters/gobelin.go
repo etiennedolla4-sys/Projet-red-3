@@ -22,6 +22,7 @@ func NewGobelin(name string) Gobelin {
 			Crit:         0,
 			Lvl:          1,
 			Gold:         120,
+			Skills:       []string{},
 		},
 	}
 }

@@ -17,7 +17,7 @@ func StartMenu() {
 
 	switch choice {
 	case 1:
-		p := game.Init()
+		p := game.CharCreation()
 		DetecP(p)
 
 	case 2:
