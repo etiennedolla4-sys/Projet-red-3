@@ -30,6 +30,8 @@ func DisplayInventory(p *characters.Character) {
 			item.TakePotion(p)
 		case "Potion de mana":
 			item.TakeManaPotion(p)
+		case "Potion de poison":
+			item.TakePoisonPotion(p)
 		}
 	}
 }
