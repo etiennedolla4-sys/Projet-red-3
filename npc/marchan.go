@@ -1,4 +1,4 @@
-package personnage
+package npc
 
 import (
 	"fmt"

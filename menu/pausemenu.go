@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"Projet-red-3/characters"
-	"Projet-red-3/personnage"
+	"Projet-red-3/npc"
 	"Projet-red-3/showinfo"
 
 	"golang.org/x/term"
@@ -49,10 +49,10 @@ func menu(p *characters.Character) {
 		showinfo.DisplayInventory(p)
 
 	case '3':
-		personnage.Merchant(p)
+		npc.Merchant(p)
 
 	case '4':
-		personnage.Blacksmith(p)
+		npc.Blacksmith(p)
 
 	case '5':
 		fmt.Println("Au revoir !")
