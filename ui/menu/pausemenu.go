@@ -1,8 +1,8 @@
 package menu
 
 import (
-	"Projet-red-3/NPCs"
 	"Projet-red-3/characters"
+	"Projet-red-3/npc"
 	"Projet-red-3/showinfo"
 	"fmt"
 	"os"
@@ -53,7 +53,7 @@ func menu(p characters.Character) {
 		showinfo.DisplayInventory(&p)
 
 	case '3':
-		NPCs.Merchant(&p)
+		npc.Merchant(&p)
 
 	case '4':
 		fmt.Println("Au revoir !")

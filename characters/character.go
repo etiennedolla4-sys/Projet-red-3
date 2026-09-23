@@ -1,5 +1,7 @@
 package characters
 
+import "Projet-red-3/item"
+
 type Character struct {
 	Name         string
 	Class        string
@@ -9,7 +11,7 @@ type Character struct {
 	BaseAttack   int
 	BaseDefense  int
 	Initiative   int
-	Inventory    []string
+	Inventory    []item.Item
 	MaxInventory int
 	MaxHP        int
 	MaxMP        int

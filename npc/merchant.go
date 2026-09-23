@@ -1,4 +1,4 @@
-package NPCs
+package npc
 
 import (
 	"fmt"

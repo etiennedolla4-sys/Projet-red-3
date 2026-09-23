@@ -1,5 +1,7 @@
 package characters
 
+import "Projet-red-3/item"
+
 type Vampire struct {
 	Character
 }
@@ -15,7 +17,7 @@ func NewVampire(name string) Vampire {
 			BaseAttack:   20,
 			BaseDefense:  10,
 			Initiative:   3,
-			Inventory:    []string{},
+			Inventory:    []item.Item{},
 			MaxInventory: 10,
 			MaxHP:        200,
 			MaxMP:        100,
