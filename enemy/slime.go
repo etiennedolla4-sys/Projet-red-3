@@ -1,4 +1,4 @@
-package monsters
+package enemy
 
 func NewSlime() Monster {
 	return Monster{

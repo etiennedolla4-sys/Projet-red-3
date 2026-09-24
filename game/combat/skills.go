@@ -2,11 +2,12 @@ package combat
 
 import (
 	"Projet-red-3/characters"
+	"Projet-red-3/enemy"
 	"fmt"
 	"math/rand"
 )
 
-func GobelinSkill(player *characters.Character, enemy *Enemy) {
+func GobelinSkill(player *characters.Character, enemy *enemy.Monster) {
 	fmt.Println("\n🪙 Vous lancez la pièce...")
 
 	result := rand.Intn(2)
@@ -22,7 +23,7 @@ func GobelinSkill(player *characters.Character, enemy *Enemy) {
 	}
 }
 
-func VampireSkill(player *characters.Character, enemy *Enemy) {
+func VampireSkill(player *characters.Character, enemy *enemy.Monster) {
 	damage := 25
 
 	enemy.HP -= damage

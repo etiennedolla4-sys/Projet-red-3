@@ -2,31 +2,12 @@ package combat
 
 import (
 	"Projet-red-3/characters"
+	"Projet-red-3/enemy"
 	"fmt"
 	"math/rand"
 )
 
-type Enemy struct {
-	Name       string
-	HP         int
-	MaxHP      int
-	Attack     int
-	Defense    int
-	Initiative int
-}
-
-func NewSlime() Enemy {
-	return Enemy{
-		Name:       "Slime",
-		HP:         80,
-		MaxHP:      80,
-		Attack:     15,
-		Defense:    3,
-		Initiative: 3,
-	}
-}
-
-func StartCombat(player *characters.Character, enemy *Enemy) {
+func StartCombat(player *characters.Character, enemy *enemy.Monster) {
 	fmt.Println("\n==============================")
 	fmt.Println("          COMBAT")
 	fmt.Println("==============================")
@@ -61,7 +42,7 @@ func StartCombat(player *characters.Character, enemy *Enemy) {
 	EndCombat(player, enemy)
 }
 
-func DisplayCombat(player *characters.Character, enemy *Enemy) {
+func DisplayCombat(player *characters.Character, enemy *enemy.Monster) {
 	fmt.Println("\n------------------------------")
 
 	fmt.Printf("%s : %d/%d PV\n",
@@ -79,7 +60,7 @@ func DisplayCombat(player *characters.Character, enemy *Enemy) {
 	fmt.Println("------------------------------")
 }
 
-func PlayerTurn(player *characters.Character, enemy *Enemy) {
+func PlayerTurn(player *characters.Character, enemy *enemy.Monster) {
 	var choice int
 
 	fmt.Println("\nQue voulez-vous faire ?")
@@ -111,7 +92,7 @@ func PlayerTurn(player *characters.Character, enemy *Enemy) {
 	}
 }
 
-func Attack(player *characters.Character, enemy *Enemy) {
+func Attack(player *characters.Character, enemy *enemy.Monster) {
 	damage := player.BaseAttack - enemy.Defense
 
 	// Ajoute un petit hasard aux dégâts
@@ -137,7 +118,7 @@ func Defend(player *characters.Character) {
 	// qu'on gérera mieux ensuite.
 }
 
-func UseSkill(player *characters.Character, enemy *Enemy) {
+func UseSkill(player *characters.Character, enemy *enemy.Monster) {
 	switch player.Class {
 
 	case "Gobelin":
@@ -151,7 +132,7 @@ func UseSkill(player *characters.Character, enemy *Enemy) {
 	}
 }
 
-func EnemyTurn(player *characters.Character, enemy *Enemy) {
+func EnemyTurn(player *characters.Character, enemy *enemy.Monster) {
 	damage := enemy.Attack - player.BaseDefense
 
 	if damage < 1 {
@@ -168,7 +149,7 @@ func EnemyTurn(player *characters.Character, enemy *Enemy) {
 	fmt.Printf("Vous perdez %d PV.\n", damage)
 }
 
-func EndCombat(player *characters.Character, enemy *Enemy) {
+func EndCombat(player *characters.Character, enemy *enemy.Monster) {
 	fmt.Println("\n==============================")
 
 	if player.HP <= 0 {

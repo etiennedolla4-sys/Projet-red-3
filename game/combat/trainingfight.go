@@ -2,12 +2,12 @@ package combat
 
 import (
 	"Projet-red-3/characters"
-	"Projet-red-3/monsters"
+	"Projet-red-3/enemy"
 	"fmt"
 )
 
 func TrainingFight(p *characters.Character) {
-	monster := monsters.NewSlime()
+	monster := enemy.NewSlime()
 
 	turn := 1
 
@@ -22,7 +22,7 @@ func TrainingFight(p *characters.Character) {
 			break
 		}
 
-		MonsterTurn(p, &monster)
+		EnemyTurn(p, &monster)
 
 		turn++
 	}

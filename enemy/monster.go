@@ -1,4 +1,4 @@
-package monsters
+package enemy
 
 type Monster struct {
 	Name       string
