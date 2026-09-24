@@ -9,27 +9,29 @@ import (
 func TrainingFight(p *characters.Character) {
 	monster := enemy.NewSlime()
 
+	oldHP := p.HP
+
 	fmt.Println("\n=== COMBAT D'ENTRAÎNEMENT ===")
 
 	for p.HP > 0 && monster.HP > 0 {
 
 		DisplayCombat(p, &monster)
 
-		PlayerTurn(p, &monster)
 		fuite := PlayerTurn(p, &monster)
+
 		if fuite {
+			p.HP = oldHP
 			return
 		}
-		if monster.HP <= 0 {
-			break
-		}
+
 		if monster.HP <= 0 {
 			break
 		}
 
 		EnemyTurn(p, &monster)
-
 	}
+
+	p.HP = oldHP
 
 	if p.HP > 0 {
 		fmt.Println("\nVous avez gagné !")
