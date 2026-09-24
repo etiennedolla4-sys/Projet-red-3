@@ -6,12 +6,12 @@ import (
 	exploration "Projet-red-3/game/exploration"
 	blacksmith "Projet-red-3/npc/blacksmith"
 	merchant "Projet-red-3/npc/merchant"
+	"Projet-red-3/ui/end"
 	"Projet-red-3/ui/showinfo"
 	"Projet-red-3/utils"
 	"fmt"
-	"os"
-
 	"golang.org/x/term"
+	"os"
 )
 
 func DetecP(p *characters.Character) {
@@ -107,7 +107,7 @@ func menu(p *characters.Character) {
 		exploration.Start(p)
 
 	case '7':
-		fmt.Println("Au revoir !")
+		end.DisplayEndScreen()
 		os.Exit(0)
 
 	default:
