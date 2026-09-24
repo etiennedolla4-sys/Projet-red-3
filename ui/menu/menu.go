@@ -108,7 +108,7 @@ func menu(p *characters.Character) {
 
 	case '7':
 		end.DisplayEndScreen()
-		return
+		os.Exit(0)
 
 	default:
 		fmt.Println("Choix invalide.")

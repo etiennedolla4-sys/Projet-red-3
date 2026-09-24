@@ -92,27 +92,27 @@ func HealthBar(hp int, maxHP int) string {
 func DisplayCombat(player *characters.Character, enemy *Enemy) {
 	fmt.Println()
 
-	fmt.Println(" ╔══════════════════════════════════════════╗")
-	fmt.Println(" ║                COMBAT                    ║")
-	fmt.Println(" ╠══════════════════════════════════════════╣")
+	fmt.Println("╔══════════════════════════════════════╗")
+	fmt.Println("║                COMBAT                ║")
+	fmt.Println("╠══════════════════════════════════════╣")
 
-	fmt.Printf("  ║  %-34s║\n", player.Name)
-	fmt.Printf("  ║  PV : %3d / %-3d                         ║\n",
+	fmt.Printf("║  %-34s║\n", player.Name)
+	fmt.Printf("║  PV : %3d / %-3d                      ║\n",
 		player.HP,
 		player.MaxHP,
 	)
-	fmt.Printf("  ║  %s ║\n", HealthBar(player.HP, player.MaxHP))
+	fmt.Printf("║  %s ║\n", HealthBar(player.HP, player.MaxHP))
 
-	fmt.Println(" ║                                          ║")
+	fmt.Println("║                                      ║")
 
-	fmt.Printf("  ║  %-34s║\n", enemy.Name)
-	fmt.Printf("  ║  PV : %3d / %-3d                          ║\n",
+	fmt.Printf("║  %-34s║\n", enemy.Name)
+	fmt.Printf("║  PV : %3d / %-3d                      ║\n",
 		enemy.HP,
 		enemy.MaxHP,
 	)
-	fmt.Printf("  ║  %s ║\n", HealthBar(enemy.HP, enemy.MaxHP))
+	fmt.Printf("║  %s ║\n", HealthBar(enemy.HP, enemy.MaxHP))
 
-	fmt.Println(" ╚═════════════════════════════════════════╝")
+	fmt.Println("╚════════════════════════════════════════╝")
 }
 
 func PlayerTurn(player *characters.Character, enemy *Enemy) (bool, bool) {

@@ -11,7 +11,7 @@ func DisplayEndScreen() {
 	fmt.Println("║                                                            ║")
 	fmt.Println("║              ███████╗██╗███╗   ██╗                         ║")
 	fmt.Println("║              ██╔════╝██║████╗  ██║                         ║")
-	fmt.Println("║              █████╗  ██║██╔██╗ ██║                         ║ ")
+	fmt.Println("║              █████╗  ██║██╔██╗ ██║                         ║")
 	fmt.Println("║              ██╔══╝  ██║██║╚██╗██║                         ║")
 	fmt.Println("║              ██║     ██║██║ ╚████║                         ║")
 	fmt.Println("║              ╚═╝     ╚═╝╚═╝  ╚═══╝                         ║")
