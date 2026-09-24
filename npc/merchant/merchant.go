@@ -1,31 +1,34 @@
 package npc
 
 import (
-	"fmt"
-
 	"Projet-red-3/characters"
 	"Projet-red-3/item"
 	"Projet-red-3/ui/text"
+	"fmt"
 )
 
 func Merchant(p *characters.Character) {
-	var merchantFirstTime = true
+	merchantFirstTime := true
+
 	message := fmt.Sprintf(
-		"En poussant la porte, une petite cloche résonne dans la boutique. Des fioles, des livres et des morceaux de créatures sont entassés sur des étagères poussiéreuses. Derrière le comptoir, un marchand te fixe quelques secondes avant de sourire.\n%s :« Bienvenue, aventurier. Ici, tout a une valeur : potions, objets, matériaux… et parfois des choses que tu ferais mieux de ne pas toucher. Si tu trouves quelque chose d'intéressant dans Veyr, ramène-le-moi. Je pourrais être généreux. »",
-		text.Color("Armando", "31"))
+		"En poussant la porte, une petite cloche résonne dans la boutique. Des fioles, des livres et des morceaux de créatures sont entassés sur des étagères poussiéreuses. Derrière le comptoir, un marchand te fixe quelques secondes avant de sourire.\n%s : « Bienvenue, aventurier. Ici, tout a une valeur : potions, objets, matériaux… et parfois des choses que tu ferais mieux de ne pas toucher. Si tu trouves quelque chose d'intéressant dans Veyr, ramène-le-moi. Je pourrais être généreux. »",
+		text.Color("Armando", "31"),
+	)
+
 	if merchantFirstTime {
 		text.PrintSlow(message)
 		merchantFirstTime = false
 	}
+
 	fmt.Println("\n=== MARCHAND ===")
 	fmt.Println("Gold :", p.Gold)
-	fmt.Println("1. Potion de vie - 3 Gold")
-	fmt.Println("2. Potion de poison - 6 Gold")
+	fmt.Println("1. Potion de vie - 20 Gold")
+	fmt.Println("2. Potion de poison - 30 Gold")
 	fmt.Println("3. Livre de Sort : Boule de Feu - 25 Gold")
 	fmt.Println("4. Fourrure de Loup - 4 Gold")
 	fmt.Println("5. Peau de Troll - 7 Gold")
-	fmt.Println("6. Cuir de Sanglier - 3 Gold")
-	fmt.Println("7. Plume de Corbeau - 1 Gold")
+	fmt.Println("6. Cuir de Sanglier - 10 Gold")
+	fmt.Println("7. Plume de Corbeau - 10 Gold")
 	fmt.Println("0. Retour")
 	fmt.Print("Votre choix : ")
 
@@ -68,7 +71,7 @@ func Merchant(p *characters.Character) {
 		return
 
 	default:
-		fmt.Println("Choix invalide")
+		fmt.Println("Choix invalide.")
 		return
 	}
 
@@ -77,8 +80,16 @@ func Merchant(p *characters.Character) {
 		return
 	}
 
-	p.Gold -= price
+	if len(p.Inventory) >= p.MaxInventory {
+		fmt.Println("Votre inventaire est plein !")
+		return
+	}
 
-	fmt.Println("Vous avez acheté :", object)
+	p.Gold -= price
+	p.Inventory = append(p.Inventory, object)
+
+	fmt.Println()
+	fmt.Println("Vous avez acheté :", object.Name())
+	fmt.Println("L'objet a été ajouté à votre inventaire.")
 	fmt.Println("Gold restant :", p.Gold)
 }

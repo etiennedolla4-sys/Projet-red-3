@@ -8,8 +8,9 @@ import (
 	"Projet-red-3/ui/showinfo"
 	"Projet-red-3/ui/text"
 	"fmt"
-	"golang.org/x/term"
 	"os"
+
+	"golang.org/x/term"
 )
 
 func DetecP(p *characters.Character) {
@@ -42,7 +43,6 @@ func DetecP(p *characters.Character) {
 			fmt.Println("\nAppuyez sur P pour ouvrir le menu.")
 		}
 	}
-
 }
 
 func menu(p *characters.Character) {
@@ -82,5 +82,4 @@ func menu(p *characters.Character) {
 	default:
 		fmt.Println("Choix invalide")
 	}
-
 }

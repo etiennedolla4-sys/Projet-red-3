@@ -2,7 +2,8 @@ package inventory
 
 import (
 	"Projet-red-3/characters"
-	"Projet-red-3/item"
+	"fmt"
+	"time"
 )
 
 func UseHealthPotion(character *characters.Character, index int) bool {
@@ -10,12 +11,9 @@ func UseHealthPotion(character *characters.Character, index int) bool {
 		return false
 	}
 
-	potion, ok := character.Inventory[index].(item.Potion)
-	if !ok {
-		return false
-	}
+	object := character.Inventory[index]
 
-	if potion.Type() != "Potion" || potion.Name() != "Potion de vie" {
+	if object.Name() != "Potion de vie" {
 		return false
 	}
 
@@ -25,10 +23,48 @@ func UseHealthPotion(character *characters.Character, index int) bool {
 		character.HP = character.MaxHP
 	}
 
+	removeItem(character, index)
+
+	return true
+}
+
+func UsePoisonPotion(character *characters.Character, index int) bool {
+	if index < 0 || index >= len(character.Inventory) {
+		return false
+	}
+
+	object := character.Inventory[index]
+
+	if object.Name() != "Potion de poison" {
+		return false
+	}
+
+	removeItem(character, index)
+
+	fmt.Println("\n☠️ Vous utilisez une potion de poison !")
+
+	for i := 0; i < 3; i++ {
+		time.Sleep(1 * time.Second)
+
+		character.HP -= 10
+
+		if character.HP < 0 {
+			character.HP = 0
+		}
+
+		fmt.Printf("PV : %d / %d\n", character.HP, character.MaxHP)
+
+		if character.HP <= 0 {
+			break
+		}
+	}
+
+	return true
+}
+
+func removeItem(character *characters.Character, index int) {
 	character.Inventory = append(
 		character.Inventory[:index],
 		character.Inventory[index+1:]...,
 	)
-
-	return true
 }
