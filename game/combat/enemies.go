@@ -2,6 +2,28 @@ package combat
 
 import "math/rand"
 
+type Enemy struct {
+	Name       string
+	HP         int
+	MaxHP      int
+	Attack     int
+	Defense    int
+	Initiative int
+	XP         int
+}
+
+func NewSlime() Enemy {
+	return Enemy{
+		Name:       "Slime",
+		HP:         80,
+		MaxHP:      80,
+		Attack:     15,
+		Defense:    3,
+		Initiative: 3,
+		XP:         10,
+	}
+}
+
 func GetEnemies(depth int) []Enemy {
 	switch depth {
 	case 1:
@@ -13,6 +35,7 @@ func GetEnemies(depth int) []Enemy {
 				Attack:     15,
 				Defense:    3,
 				Initiative: 3,
+				XP:         10,
 			},
 			{
 				Name:       "Petit Gobelin",
@@ -21,6 +44,7 @@ func GetEnemies(depth int) []Enemy {
 				Attack:     18,
 				Defense:    2,
 				Initiative: 5,
+				XP:         15,
 			},
 		}
 
@@ -33,6 +57,7 @@ func GetEnemies(depth int) []Enemy {
 				Attack:     20,
 				Defense:    5,
 				Initiative: 6,
+				XP:         20,
 			},
 			{
 				Name:       "Araignée ancienne",
@@ -41,6 +66,7 @@ func GetEnemies(depth int) []Enemy {
 				Attack:     25,
 				Defense:    4,
 				Initiative: 8,
+				XP:         25,
 			},
 		}
 
@@ -53,6 +79,7 @@ func GetEnemies(depth int) []Enemy {
 				Attack:     25,
 				Defense:    7,
 				Initiative: 10,
+				XP:         30,
 			},
 			{
 				Name:       "Prédateur de la forêt",
@@ -61,6 +88,7 @@ func GetEnemies(depth int) []Enemy {
 				Attack:     30,
 				Defense:    8,
 				Initiative: 9,
+				XP:         35,
 			},
 		}
 
@@ -73,6 +101,7 @@ func GetEnemies(depth int) []Enemy {
 				Attack:     30,
 				Defense:    12,
 				Initiative: 4,
+				XP:         45,
 			},
 			{
 				Name:       "Chauve-souris géante",
@@ -81,6 +110,7 @@ func GetEnemies(depth int) []Enemy {
 				Attack:     35,
 				Defense:    8,
 				Initiative: 15,
+				XP:         40,
 			},
 		}
 
@@ -93,6 +123,7 @@ func GetEnemies(depth int) []Enemy {
 				Attack:     40,
 				Defense:    15,
 				Initiative: 12,
+				XP:         60,
 			},
 			{
 				Name:       "Gardien abyssal",
@@ -101,6 +132,7 @@ func GetEnemies(depth int) []Enemy {
 				Attack:     45,
 				Defense:    18,
 				Initiative: 10,
+				XP:         75,
 			},
 		}
 

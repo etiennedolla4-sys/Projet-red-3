@@ -3,8 +3,9 @@ package menu
 import (
 	"Projet-red-3/characters"
 	"Projet-red-3/game/combat"
-	"Projet-red-3/game/exploration"
-	"Projet-red-3/npc/merchant"
+	exploration "Projet-red-3/game/exploration"
+	"Projet-red-3/npc/blacksmith"
+	merchant "Projet-red-3/npc/merchant"
 	"Projet-red-3/ui/showinfo"
 	"Projet-red-3/ui/text"
 	"Projet-red-3/utils"
@@ -49,7 +50,7 @@ func DetecP(p *characters.Character) {
 }
 
 func menu(p *characters.Character) {
-	var choix [1]byte
+	var choice [1]byte
 
 	utils.ClearTerminal()
 
@@ -57,16 +58,17 @@ func menu(p *characters.Character) {
 	fmt.Println("1. Afficher les informations")
 	fmt.Println("2. Inventaire")
 	fmt.Println("3. Marchand")
-	fmt.Println("4. Camp d'entrainement")
-	fmt.Println("5. Exploration")
-	fmt.Println("6. Quitter")
+	fmt.Println("4. forgeron")
+	fmt.Println("5. Camp d'entrainement")
+	fmt.Println("6. Exploration")
+	fmt.Println("7. Quitter le jeux")
 	fmt.Print("Votre choix : ")
 
-	os.Stdin.Read(choix[:])
+	os.Stdin.Read(choice[:])
 
 	utils.ClearTerminal()
 
-	switch choix[0] {
+	switch choice[0] {
 	case '1':
 		showinfo.DisplayInfo(*p)
 
@@ -77,12 +79,15 @@ func menu(p *characters.Character) {
 		merchant.Merchant(p)
 
 	case '4':
-		combat.TrainingFight(p)
+		npc.Blacksmith(p)
 
 	case '5':
-		exploration.Start(p)
+		combat.TrainingFight(p)
 
 	case '6':
+		exploration.Start(p)
+
+	case '7':
 		fmt.Println("Au revoir !")
 		os.Exit(0)
 

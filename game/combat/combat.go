@@ -2,13 +2,12 @@ package combat
 
 import (
 	"Projet-red-3/characters"
-	"Projet-red-3/enemy"
 	"fmt"
 	"math/rand"
 	"os"
 )
 
-func StartCombat(player *characters.Character, enemy *enemy.Monster) {
+func StartCombat(player *characters.Character, enemy *Enemy) {
 	fmt.Println("\n==============================")
 	fmt.Println("          COMBAT")
 	fmt.Println("==============================")
@@ -33,7 +32,7 @@ func StartCombat(player *characters.Character, enemy *enemy.Monster) {
 			fuite := PlayerTurn(player, enemy)
 
 			if fuite {
-				fmt.Println("\nVous avez fui le combat.")
+				fmt.Println("\n🏃 Vous avez fui le combat.")
 				return
 			}
 		} else {
@@ -52,6 +51,10 @@ func StartCombat(player *characters.Character, enemy *enemy.Monster) {
 
 func HealthBar(hp int, maxHP int) string {
 	const size = 20
+
+	if maxHP <= 0 {
+		return "[░░░░░░░░░░░░░░░░░░░░]"
+	}
 
 	ratio := float64(hp) / float64(maxHP)
 	filled := int(ratio * size)
@@ -77,7 +80,7 @@ func HealthBar(hp int, maxHP int) string {
 	return "[" + bar + "]"
 }
 
-func DisplayCombat(player *characters.Character, enemy *enemy.Monster) {
+func DisplayCombat(player *characters.Character, enemy *Enemy) {
 	fmt.Println()
 
 	fmt.Println("╔══════════════════════════════════════╗")
@@ -103,7 +106,7 @@ func DisplayCombat(player *characters.Character, enemy *enemy.Monster) {
 	fmt.Println("╚══════════════════════════════════════╝")
 }
 
-func PlayerTurn(player *characters.Character, enemy *enemy.Monster) bool {
+func PlayerTurn(player *characters.Character, enemy *Enemy) bool {
 	var choice int
 
 	fmt.Println("\nQue voulez-vous faire ?")
@@ -136,7 +139,7 @@ func PlayerTurn(player *characters.Character, enemy *enemy.Monster) bool {
 	return false
 }
 
-func Attack(player *characters.Character, enemy *enemy.Monster) {
+func Attack(player *characters.Character, enemy *Enemy) {
 	damage := player.BaseAttack - enemy.Defense
 	damage += rand.Intn(5)
 
@@ -158,7 +161,7 @@ func Defend(player *characters.Character) {
 	fmt.Println("Votre défense est renforcée pour ce tour.")
 }
 
-func UseSkill(player *characters.Character, enemy *enemy.Monster) {
+func UseSkill(player *characters.Character, enemy *Enemy) {
 	switch player.Class {
 	case "Gobelin":
 		GobelinSkill(player, enemy)
@@ -174,7 +177,7 @@ func UseSkill(player *characters.Character, enemy *enemy.Monster) {
 	}
 }
 
-func EnemyTurn(player *characters.Character, enemy *enemy.Monster) {
+func EnemyTurn(player *characters.Character, enemy *Enemy) {
 	damage := enemy.Attack - player.BaseDefense
 
 	if damage < 1 {
@@ -191,7 +194,7 @@ func EnemyTurn(player *characters.Character, enemy *enemy.Monster) {
 	fmt.Printf("Vous perdez %d PV.\n", damage)
 }
 
-func EndCombat(player *characters.Character, enemy *enemy.Monster) {
+func EndCombat(player *characters.Character, enemy *Enemy) {
 	fmt.Println("\n==============================")
 
 	if player.HP <= 0 {

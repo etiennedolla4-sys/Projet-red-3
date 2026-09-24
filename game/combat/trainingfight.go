@@ -2,37 +2,50 @@ package combat
 
 import (
 	"Projet-red-3/characters"
-	"Projet-red-3/enemy"
+	"Projet-red-3/utils"
 	"fmt"
 )
 
-func TrainingFight(p *characters.Character) {
-	monster := enemy.NewSlime()
-	oldHP := p.HP
+func TrainingFight(player *characters.Character) {
+	monster := NewSlime()
 
-	fmt.Println("\n=== COMBAT D'ENTRAÎNEMENT ===")
+	fmt.Println("\n==============================")
+	fmt.Println("     CAMP D'ENTRAÎNEMENT")
+	fmt.Println("==============================")
 
-	for p.HP > 0 && monster.HP > 0 {
-		DisplayCombat(p, &monster)
+	fmt.Printf("\nVous affrontez un %s !\n", monster.Name)
 
-		if fuite := PlayerTurn(p, &monster); fuite {
-			p.HP = oldHP
-			return
+	playerTurn := player.Initiative >= monster.Initiative
+
+	for player.HP > 0 && monster.HP > 0 {
+		utils.ClearTerminal()
+
+		DisplayCombat(player, &monster)
+
+		if playerTurn {
+			fuite := PlayerTurn(player, &monster)
+
+			if fuite {
+				utils.ClearTerminal()
+				fmt.Println("\n🏃 Vous quittez l'entraînement.")
+				return
+			}
+		} else {
+			EnemyTurn(player, &monster)
 		}
 
-		if monster.HP <= 0 {
+		if player.HP <= 0 || monster.HP <= 0 {
 			break
 		}
 
-		EnemyTurn(p, &monster)
+		playerTurn = !playerTurn
 	}
 
-	p.HP = oldHP
+	utils.ClearTerminal()
 
-	if p.HP > 0 {
-		fmt.Println("\nVous avez gagné !")
+	if player.HP > 0 {
+		fmt.Println("\n🏆 Vous avez remporté l'entraînement !")
 	} else {
-		fmt.Println("\nVous avez perdu !")
+		fmt.Println("\n💀 Vous avez perdu l'entraînement...")
 	}
-	fmt.Println("\nRetour au menu...")
 }

@@ -2,12 +2,11 @@ package combat
 
 import (
 	"Projet-red-3/characters"
-	"Projet-red-3/enemy"
 	"fmt"
 	"math/rand"
 )
 
-func GobelinSkill(player *characters.Character, enemy *enemy.Monster) {
+func GobelinSkill(player *characters.Character, enemy *Enemy) {
 	fmt.Println("\n🪙 Vous lancez la pièce...")
 
 	result := rand.Intn(2)
@@ -15,7 +14,6 @@ func GobelinSkill(player *characters.Character, enemy *enemy.Monster) {
 	if result == 0 {
 		fmt.Println("PILE !")
 		fmt.Println("💀 Coup mortel !")
-
 		enemy.HP = 0
 	} else {
 		fmt.Println("FACE !")
@@ -32,7 +30,7 @@ func GobelinSkill(player *characters.Character, enemy *enemy.Monster) {
 	}
 }
 
-func VampireSkill(player *characters.Character, enemy *enemy.Monster) {
+func VampireSkill(player *characters.Character, enemy *Enemy) {
 	damage := 25
 
 	enemy.HP -= damage
@@ -55,7 +53,7 @@ func VampireSkill(player *characters.Character, enemy *enemy.Monster) {
 	fmt.Printf("PV : %d / %d\n", player.HP, player.MaxHP)
 }
 
-func BerserkerSkill(player *characters.Character, enemy *enemy.Monster) {
+func BerserkerSkill(player *characters.Character, enemy *Enemy) {
 	fmt.Println("\n💢 RAGE DU BERSERKER !")
 
 	damage := player.BaseAttack + 20
