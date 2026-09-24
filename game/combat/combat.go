@@ -15,42 +15,54 @@ func StartCombat(player *characters.Character, enemy *enemy.Monster) {
 
 	fmt.Printf("\n%s VS %s\n", player.Name, enemy.Name)
 
-	// Détermine qui commence
 	playerInitiative := player.Initiative + rand.Intn(10)
 	enemyInitiative := enemy.Initiative + rand.Intn(10)
 
 	playerTurn := playerInitiative >= enemyInitiative
 
-	for player.HP > 0 && enemy.HP > 0 {
+	if playerTurn {
+		fmt.Println("\n⚡ Vous commencez le combat !")
+	} else {
+		fmt.Println("\n⚡ L'ennemi commence le combat !")
+	}
 
+	for player.HP > 0 && enemy.HP > 0 {
 		DisplayCombat(player, enemy)
 
 		if playerTurn {
 			fuite := PlayerTurn(player, enemy)
 
 			if fuite {
+				fmt.Println("\nVous avez fui le combat.")
 				return
 			}
 		} else {
 			EnemyTurn(player, enemy)
 		}
 
-		// Vérifie si quelqu'un est mort
 		if player.HP <= 0 || enemy.HP <= 0 {
 			break
 		}
 
-		// Change de tour
 		playerTurn = !playerTurn
 	}
 
 	EndCombat(player, enemy)
 }
+
 func HealthBar(hp int, maxHP int) string {
 	const size = 20
 
 	ratio := float64(hp) / float64(maxHP)
 	filled := int(ratio * size)
+
+	if filled < 0 {
+		filled = 0
+	}
+
+	if filled > size {
+		filled = size
+	}
 
 	bar := ""
 
@@ -64,20 +76,28 @@ func HealthBar(hp int, maxHP int) string {
 
 	return "[" + bar + "]"
 }
+
 func DisplayCombat(player *characters.Character, enemy *enemy.Monster) {
 	fmt.Println()
+
 	fmt.Println("╔══════════════════════════════════════╗")
 	fmt.Println("║                COMBAT                ║")
 	fmt.Println("╠══════════════════════════════════════╣")
 
 	fmt.Printf("║  %-34s║\n", player.Name)
-	fmt.Printf("║  PV : %3d / %-3d                    ║\n", player.HP, player.MaxHP)
+	fmt.Printf("║  PV : %3d / %-3d                    ║\n",
+		player.HP,
+		player.MaxHP,
+	)
 	fmt.Printf("║  %s ║\n", HealthBar(player.HP, player.MaxHP))
 
 	fmt.Println("║                                      ║")
 
 	fmt.Printf("║  %-34s║\n", enemy.Name)
-	fmt.Printf("║  PV : %3d / %-3d                    ║\n", enemy.HP, enemy.MaxHP)
+	fmt.Printf("║  PV : %3d / %-3d                    ║\n",
+		enemy.HP,
+		enemy.MaxHP,
+	)
 	fmt.Printf("║  %s ║\n", HealthBar(enemy.HP, enemy.MaxHP))
 
 	fmt.Println("╚══════════════════════════════════════╝")
@@ -96,7 +116,6 @@ func PlayerTurn(player *characters.Character, enemy *enemy.Monster) bool {
 	fmt.Scan(&choice)
 
 	switch choice {
-
 	case 1:
 		Attack(player, enemy)
 
@@ -107,19 +126,18 @@ func PlayerTurn(player *characters.Character, enemy *enemy.Monster) bool {
 		Defend(player)
 
 	case 4:
-		fmt.Println("\nVous prenez la fuite !")
+		fmt.Println("\n🏃 Vous prenez la fuite !")
 		return true
 
 	default:
 		fmt.Println("\nChoix invalide.")
 	}
+
 	return false
 }
 
 func Attack(player *characters.Character, enemy *enemy.Monster) {
 	damage := player.BaseAttack - enemy.Defense
-
-	// Ajoute un petit hasard aux dégâts
 	damage += rand.Intn(5)
 
 	if damage < 1 {
@@ -137,19 +155,19 @@ func Attack(player *characters.Character, enemy *enemy.Monster) {
 
 func Defend(player *characters.Character) {
 	fmt.Println("\n🛡 Vous vous mettez en défense !")
-
-	// Pour l'instant, on ajoute simplement un bonus temporaire
-	// qu'on gérera mieux ensuite.
+	fmt.Println("Votre défense est renforcée pour ce tour.")
 }
 
 func UseSkill(player *characters.Character, enemy *enemy.Monster) {
 	switch player.Class {
-
 	case "Gobelin":
 		GobelinSkill(player, enemy)
 
 	case "Vampire":
 		VampireSkill(player, enemy)
+
+	case "Berserker":
+		BerserkerSkill(player, enemy)
 
 	default:
 		fmt.Println("\nCette classe n'a pas encore de compétence.")
@@ -179,11 +197,13 @@ func EndCombat(player *characters.Character, enemy *enemy.Monster) {
 	if player.HP <= 0 {
 		fmt.Println("💀 Vous avez été vaincu...")
 		os.Exit(0)
-	} else {
+	} else if enemy.HP <= 0 {
 		fmt.Printf("🏆 Vous avez vaincu %s !\n", enemy.Name)
 
 		player.Gold += 20
-		fmt.Println("Vous gagnez 20 gold !")
+
+		fmt.Println("Vous gagnez 20 Gold !")
+		fmt.Printf("Gold actuel : %d\n", player.Gold)
 
 		GainXP(player, enemy.XP)
 	}

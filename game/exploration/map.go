@@ -31,14 +31,14 @@ func (m Map) Display(playerX, playerY, depth int) {
 		"@ = Vous",
 		". = Chemin",
 		"# = Mur",
+		"E = Ennemi",
 		"T = Trésor",
-		"! = Danger",
 		"+ = Repos",
 	}
 
 	fmt.Println()
 	fmt.Println("+-----------------+    +---------------------+")
-	fmt.Printf("|   CARTE - %d    |    |       LEGENDE       |\n", depth)
+	fmt.Printf("|   CARTE - %d     |    |       LEGENDE       |\n", depth)
 	fmt.Println("+-----------------+    +---------------------+")
 
 	for y := m.Height - 1; y >= 0; y-- {
@@ -92,6 +92,14 @@ func surfaceTile(x, y int) string {
 		return "+"
 	}
 
+	if x == 1 && y == 5 {
+		return "E"
+	}
+
+	if x == 5 && y == 1 {
+		return "E"
+	}
+
 	return "."
 }
 
@@ -105,7 +113,11 @@ func ruinsTile(x, y int) string {
 	}
 
 	if x == 6 && y == 5 {
-		return "!"
+		return "E"
+	}
+
+	if x == 1 && y == 1 {
+		return "E"
 	}
 
 	return "."
@@ -113,7 +125,7 @@ func ruinsTile(x, y int) string {
 
 func forestTile(x, y int) string {
 	if x == 1 && y == 1 {
-		return "!"
+		return "E"
 	}
 
 	if x == 5 && y == 6 {
@@ -122,6 +134,14 @@ func forestTile(x, y int) string {
 
 	if x == 6 && y == 2 {
 		return "+"
+	}
+
+	if x == 2 && y == 5 {
+		return "E"
+	}
+
+	if x == 5 && y == 1 {
+		return "E"
 	}
 
 	return "."
@@ -133,7 +153,7 @@ func caveTile(x, y int) string {
 	}
 
 	if x == 3 && y == 6 {
-		return "!"
+		return "E"
 	}
 
 	if x == 5 && y == 1 {
@@ -142,6 +162,10 @@ func caveTile(x, y int) string {
 
 	if x == 1 && y == 3 {
 		return "+"
+	}
+
+	if x == 3 && y == 2 {
+		return "E"
 	}
 
 	return "."
@@ -153,11 +177,19 @@ func abyssTile(x, y int) string {
 	}
 
 	if x == 3 && y == 5 {
-		return "!"
+		return "E"
 	}
 
 	if x == 5 && y == 3 {
 		return "T"
+	}
+
+	if x == 2 && y == 2 {
+		return "E"
+	}
+
+	if x == 4 && y == 4 {
+		return "E"
 	}
 
 	return "."
