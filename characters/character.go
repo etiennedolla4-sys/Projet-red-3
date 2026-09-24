@@ -2,6 +2,12 @@ package characters
 
 import "Projet-red-3/item"
 
+type Equipment struct {
+	Head  string
+	Chest string
+	Feet  string
+}
+
 type Character struct {
 	Name         string
 	Class        string
@@ -20,4 +26,5 @@ type Character struct {
 	XP           int
 	Gold         int
 	Skills       []string
+	Equipment    Equipment
 }

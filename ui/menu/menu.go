@@ -4,7 +4,7 @@ import (
 	"Projet-red-3/characters"
 	"Projet-red-3/game/combat"
 	exploration "Projet-red-3/game/exploration"
-	"Projet-red-3/npc/blacksmith"
+	blacksmith "Projet-red-3/npc/blacksmith"
 	merchant "Projet-red-3/npc/merchant"
 	"Projet-red-3/ui/showinfo"
 	"Projet-red-3/ui/text"
@@ -79,7 +79,7 @@ func menu(p *characters.Character) {
 		merchant.Merchant(p)
 
 	case '4':
-		npc.Blacksmith(p)
+		blacksmith.Blacksmith(p)
 
 	case '5':
 		combat.TrainingFight(p)
