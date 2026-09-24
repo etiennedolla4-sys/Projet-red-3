@@ -1,0 +1,52 @@
+package end
+
+import (
+	"fmt"
+	"time"
+)
+
+func DisplayEndScreen() {
+	fmt.Println()
+	fmt.Println("╔════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                                                            ║")
+	fmt.Println("║              ███████╗██╗███╗   ██╗                         ║")
+	fmt.Println("║              ██╔════╝██║████╗  ██║                         ║")
+	fmt.Println("║              █████╗  ██║██╔██╗ ██║                         ║ ")
+	fmt.Println("║              ██╔══╝  ██║██║╚██╗██║                         ║")
+	fmt.Println("║              ██║     ██║██║ ╚████║                         ║")
+	fmt.Println("║              ╚═╝     ╚═╝╚═╝  ╚═══╝                         ║")
+	fmt.Println("║                                                            ║")
+	fmt.Println("║              ██╗     ███████╗███████╗                      ║")
+	fmt.Println("║              ██║     ██╔════╝██╔════╝                      ║")
+	fmt.Println("║              ██║     █████╗  █████╗                        ║")
+	fmt.Println("║              ██║     ██╔══╝  ██╔══╝                        ║")
+	fmt.Println("║              ███████╗███████╗██║                           ║")
+	fmt.Println("║              ╚══════╝╚══════╝╚═╝                           ║")
+	fmt.Println("║                                                            ║")
+	fmt.Println("╠════════════════════════════════════════════════════════════╣")
+	fmt.Println("║                                                            ║")
+	fmt.Println("║                 ★ FIN DE L'AVENTURE ★                     ║")
+	fmt.Println("║                                                            ║")
+	fmt.Println("║              Vous avez atteint la fin                      ║")
+	fmt.Println("║                 de votre exploration.                      ║")
+	fmt.Println("║                                                            ║")
+	fmt.Println("║          Merci d'avoir joué à notre jeu !                  ║")
+	fmt.Println("║                                                            ║")
+	fmt.Println("╠════════════════════════════════════════════════════════════╣")
+	fmt.Println("║                                                            ║")
+	fmt.Println("║                    CRÉATEURS                               ║")
+	fmt.Println("║                                                            ║")
+	fmt.Println("║                 Étienne Dolla                              ║")
+	fmt.Println("║                 Saad Ichkarran                             ║")
+	fmt.Println("║                                                            ║")
+	fmt.Println("╠════════════════════════════════════════════════════════════╣")
+	fmt.Println("║                                                            ║")
+	fmt.Println("║       Merci pour votre temps et votre aventure !           ║")
+	fmt.Println("║                                                            ║")
+	fmt.Println("║                 À BIENTÔT...                               ║")
+	fmt.Println("║                                                            ║")
+	fmt.Println("╚════════════════════════════════════════════════════════════╝")
+	fmt.Println()
+
+	time.Sleep(3 * time.Second)
+}
