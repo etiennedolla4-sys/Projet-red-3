@@ -44,9 +44,10 @@ func Init() characters.Character {
 	fmt.Println("Choisissez votre classe ")
 	fmt.Println("1. Gobelin")
 	fmt.Println("2. Vampire")
+	fmt.Println("3. Berserker")
 	fmt.Scan(&classe)
 
-	if classe < 3 && classe > 0 {
+	if classe < 4 && classe > 0 {
 		switch classe {
 		case 1:
 			gobelin := characters.NewGobelin(name)
@@ -55,6 +56,10 @@ func Init() characters.Character {
 		case 2:
 			vampire := characters.NewVampire(name)
 			character = vampire.Character
+
+		case 3:
+			berserker := characters.NewBerserker(name)
+			character = berserker.Character
 		}
 	} else {
 		fmt.Println("Choix invalide")

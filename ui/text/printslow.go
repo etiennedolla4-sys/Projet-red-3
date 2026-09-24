@@ -22,11 +22,13 @@ func PrintSlow(message string) {
 
 	go func() {
 		defer close(done)
+
 		for {
 			b, err := Stdin.ReadByte()
 			if err != nil {
 				return
 			}
+
 			if b == ' ' {
 				skip <- true
 				return
@@ -34,22 +36,21 @@ func PrintSlow(message string) {
 		}
 	}()
 
-	stop := func() {
-		term.Restore(int(os.Stdin.Fd()), oldState)
-	}
-
 	for i, lettre := range message {
 		select {
 		case <-skip:
 			fmt.Print(message[i:])
-			stop()
+			term.Restore(int(os.Stdin.Fd()), oldState)
 			return
+
 		default:
 			fmt.Print(string(lettre))
 			time.Sleep(50 * time.Millisecond)
 		}
 	}
-	stop()
+
+	term.Restore(int(os.Stdin.Fd()), oldState)
+
 	select {
 	case <-skip:
 	case <-done:

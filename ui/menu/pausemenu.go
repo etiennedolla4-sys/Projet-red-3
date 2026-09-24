@@ -7,6 +7,7 @@ import (
 	"Projet-red-3/npc/merchant"
 	"Projet-red-3/ui/showinfo"
 	"Projet-red-3/ui/text"
+	"Projet-red-3/utils"
 	"fmt"
 	"os"
 
@@ -32,6 +33,7 @@ func DetecP(p *characters.Character) {
 		if b == 'p' || b == 'P' {
 			term.Restore(int(os.Stdin.Fd()), oldState)
 
+			utils.ClearTerminal()
 			menu(p)
 
 			oldState, err = term.MakeRaw(int(os.Stdin.Fd()))
@@ -40,7 +42,8 @@ func DetecP(p *characters.Character) {
 				return
 			}
 
-			fmt.Println("\nAppuyez sur P pour ouvrir le menu.")
+			fmt.Println()
+			fmt.Println("Appuyez sur P pour ouvrir le menu.")
 		}
 	}
 }
@@ -48,9 +51,11 @@ func DetecP(p *characters.Character) {
 func menu(p *characters.Character) {
 	var choix [1]byte
 
-	fmt.Println("\n=== MENU ===")
-	fmt.Println("1. Afficher les informations du personnage")
-	fmt.Println("2. Accéder au contenu de l'inventaire")
+	utils.ClearTerminal()
+
+	fmt.Println("========== MENU ==========")
+	fmt.Println("1. Afficher les informations")
+	fmt.Println("2. Inventaire")
 	fmt.Println("3. Marchand")
 	fmt.Println("4. Camp d'entrainement")
 	fmt.Println("5. Exploration")
@@ -58,6 +63,8 @@ func menu(p *characters.Character) {
 	fmt.Print("Votre choix : ")
 
 	os.Stdin.Read(choix[:])
+
+	utils.ClearTerminal()
 
 	switch choix[0] {
 	case '1':
@@ -80,6 +87,6 @@ func menu(p *characters.Character) {
 		os.Exit(0)
 
 	default:
-		fmt.Println("Choix invalide")
+		fmt.Println("Choix invalide.")
 	}
 }
