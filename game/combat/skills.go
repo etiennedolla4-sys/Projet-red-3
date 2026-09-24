@@ -13,7 +13,7 @@ func GobelinSkill(player *characters.Character, enemy *Enemy) {
 
 	if result == 0 {
 		fmt.Println("PILE !")
-		fmt.Println("💀 Coup mortel !")
+		fmt.Println("💀 Coup Critique !")
 		enemy.HP /= 2
 	} else {
 		fmt.Println("FACE !")
