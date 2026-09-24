@@ -23,7 +23,14 @@ func DetecP(p *characters.Character) {
 	}
 	defer term.Restore(int(os.Stdin.Fd()), oldState)
 
-	fmt.Println("Appuyez sur P pour ouvrir le menu.")
+	fmt.Println("╔════════════════════════════════════════╗")
+	fmt.Println("║                                        ║")
+	fmt.Println("║       V E Y R  -  A V E N T U R E      ║")
+	fmt.Println("║                                        ║")
+	fmt.Println("║       Appuyez sur P pour ouvrir        ║")
+	fmt.Println("║              le menu                   ║")
+	fmt.Println("║                                        ║")
+	fmt.Println("╚════════════════════════════════════════╝")
 
 	for {
 		b, err := text.Stdin.ReadByte()
@@ -44,7 +51,12 @@ func DetecP(p *characters.Character) {
 			}
 
 			fmt.Println()
-			fmt.Println("Appuyez sur P pour ouvrir le menu.")
+			fmt.Println("╔════════════════════════════════════════╗")
+			fmt.Println("║                                        ║")
+			fmt.Println("║       Appuyez sur P pour ouvrir        ║")
+			fmt.Println("║              le menu                   ║")
+			fmt.Println("║                                        ║")
+			fmt.Println("╚════════════════════════════════════════╝")
 		}
 	}
 }
@@ -54,15 +66,22 @@ func menu(p *characters.Character) {
 
 	utils.ClearTerminal()
 
-	fmt.Println("========== MENU ==========")
-	fmt.Println("1. Afficher les informations")
-	fmt.Println("2. Inventaire")
-	fmt.Println("3. Marchand")
-	fmt.Println("4. forgeron")
-	fmt.Println("5. Camp d'entrainement")
-	fmt.Println("6. Exploration")
-	fmt.Println("7. Quitter le jeux")
-	fmt.Print("Votre choix : ")
+	fmt.Println("╔════════════════════════════════════════╗")
+	fmt.Println("║                                        ║")
+	fmt.Println("║                M E N U                 ║")
+	fmt.Println("║                                        ║")
+	fmt.Println("╠════════════════════════════════════════╣")
+	fmt.Println("║                                        ║")
+	fmt.Println("║  1. Afficher les informations          ║")
+	fmt.Println("║  2. Inventaire                         ║")
+	fmt.Println("║  3. Marchand                           ║")
+	fmt.Println("║  4. Forgeron                           ║")
+	fmt.Println("║  5. Camp d'entrainement                ║")
+	fmt.Println("║  6. Exploration                        ║")
+	fmt.Println("║  7. Quitter le jeux                    ║")
+	fmt.Println("║                                        ║")
+	fmt.Println("╚════════════════════════════════════════╝")
+	fmt.Print("\nVotre choix : ")
 
 	os.Stdin.Read(choice[:])
 
