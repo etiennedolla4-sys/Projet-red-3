@@ -2,6 +2,7 @@ package menu
 
 import (
 	"Projet-red-3/characters"
+	"Projet-red-3/game/exploration"
 	"Projet-red-3/npc/merchant"
 	"Projet-red-3/ui/showinfo"
 	"fmt"
@@ -42,7 +43,8 @@ func menu(p *characters.Character) {
 	fmt.Println("1. Afficher les informations du personnage")
 	fmt.Println("2. Accéder au contenu de l'inventaire")
 	fmt.Println("3. Marchand")
-	fmt.Println("4. Quitter")
+	fmt.Println("4. Exploration")
+	fmt.Println("5. Quitter")
 	fmt.Print("Votre choix : ")
 
 	os.Stdin.Read(choix[:])
@@ -58,6 +60,9 @@ func menu(p *characters.Character) {
 		npc.Merchant(p)
 
 	case '4':
+		game.Start(p)
+
+	case '5':
 		fmt.Println("Au revoir !")
 		os.Exit(0)
 
