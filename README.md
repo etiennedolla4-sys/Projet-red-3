@@ -21,19 +21,19 @@ Chaque classe possède une mécanique de gameplay différente afin de rendre les
 
 ### Écran d'accueil
 
-> Ajouter ici une capture d'écran du menu principal.
+> ![alt text](image.png)
 
 ### Création du personnage
 
-> Ajouter ici une capture d'écran de la sélection du nom et de la classe.
+> ![alt text](image-1.png)
 
 ### Combat
 
-> Ajouter ici une capture d'écran d'un combat avec les barres de PV.
+> ![alt text](image-2.png)
 
-### Inventaire / Marchand
+### Marchand
 
-> Ajouter ici une capture d'écran de l'inventaire ou du marchand.
+> ![alt text](image-3.png)
 
 ---
 
@@ -270,8 +270,6 @@ Projet-red-3/
 ### Licence
 
 Projet réalisé dans le cadre du Projet Red à Ynov Campus Val d'europe.
-
-Tous les droits sur le code sont réservés aux auteurs du projet, sauf indication contraire.
 
 ---
 
