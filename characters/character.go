@@ -17,6 +17,7 @@ type Character struct {
 	MaxMP        int
 	Crit         int
 	Lvl          int
+	XP           int
 	Gold         int
 	Skills       []string
 }

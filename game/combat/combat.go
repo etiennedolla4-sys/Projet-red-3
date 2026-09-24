@@ -183,8 +183,9 @@ func EndCombat(player *characters.Character, enemy *enemy.Monster) {
 		fmt.Printf("🏆 Vous avez vaincu %s !\n", enemy.Name)
 
 		player.Gold += 20
-
 		fmt.Println("Vous gagnez 20 gold !")
+
+		GainXP(player, enemy.XP)
 	}
 
 	fmt.Println("==============================")
