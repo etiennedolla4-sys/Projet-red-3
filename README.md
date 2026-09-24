@@ -21,23 +21,23 @@ Chaque classe possède une mécanique de gameplay différente afin de rendre les
 
 ### Écran d'accueil
 
-> ![alt text](screenshots/)
+> ![alt text](screenshots/Title.png)
 
 ### Création du personnage
 
-> ![alt text](image-1.png)
+> ![alt text](screenshots/class.png)
 
 ### Combat
 
-> ![alt text](image-2.png)
+> ![alt text](screenshots/combat.png)
 
 ### Marchand
 
-> ![alt text](image-3.png)
+> ![alt text](screenshots/merchant.png)
 
 ---
 
-## 📌 Gestion du projet
+## 3.Gestion du projet
 
 Le suivi des tâches, des fonctionnalités et de l'avancement du projet est réalisé avec Trello.
 
