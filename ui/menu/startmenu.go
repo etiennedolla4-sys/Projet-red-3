@@ -17,8 +17,10 @@ func StartMenu() {
 	case 1:
 		p := game.Init()
 		DetecP(&p)
+
 	case 2:
 		fmt.Println("Ciao")
 		os.Exit(0)
 	}
+
 }

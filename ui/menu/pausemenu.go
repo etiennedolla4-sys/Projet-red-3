@@ -3,13 +3,13 @@ package menu
 import (
 	"Projet-red-3/characters"
 	"Projet-red-3/game/combat"
-	npc "Projet-red-3/npc/merchant"
+	"Projet-red-3/game/exploration"
+	"Projet-red-3/npc/merchant"
 	"Projet-red-3/ui/showinfo"
 	"Projet-red-3/ui/text"
 	"fmt"
-	"os"
-
 	"golang.org/x/term"
+	"os"
 )
 
 func DetecP(p *characters.Character) {
@@ -33,7 +33,6 @@ func DetecP(p *characters.Character) {
 
 			menu(p)
 
-			// Back to raw mode to keep listening for 'P'.
 			oldState, err = term.MakeRaw(int(os.Stdin.Fd()))
 			if err != nil {
 				fmt.Println("Erreur terminal :", err)
@@ -43,6 +42,7 @@ func DetecP(p *characters.Character) {
 			fmt.Println("\nAppuyez sur P pour ouvrir le menu.")
 		}
 	}
+
 }
 
 func menu(p *characters.Character) {
@@ -53,7 +53,8 @@ func menu(p *characters.Character) {
 	fmt.Println("2. Accéder au contenu de l'inventaire")
 	fmt.Println("3. Marchand")
 	fmt.Println("4. Camp d'entrainement")
-	fmt.Println("5. Quitter")
+	fmt.Println("5. Exploration")
+	fmt.Println("6. Quitter")
 	fmt.Print("Votre choix : ")
 
 	os.Stdin.Read(choix[:])
@@ -61,17 +62,25 @@ func menu(p *characters.Character) {
 	switch choix[0] {
 	case '1':
 		showinfo.DisplayInfo(*p)
+
 	case '2':
 		showinfo.DisplayInventory(p)
+
 	case '3':
-		npc.Merchant(p)
+		merchant.Merchant(p)
+
 	case '4':
 		combat.TrainingFight(p)
+
 	case '5':
+		exploration.Start(p)
+
+	case '6':
 		fmt.Println("Au revoir !")
 		os.Exit(0)
 
 	default:
 		fmt.Println("Choix invalide")
 	}
+
 }

@@ -61,4 +61,5 @@ func Init() characters.Character {
 	}
 
 	return character
+
 }
