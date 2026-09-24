@@ -2,6 +2,7 @@ package game
 
 import (
 	"Projet-red-3/characters"
+	"Projet-red-3/item"
 	"Projet-red-3/ui/text"
 	"fmt"
 	"strings"
@@ -61,6 +62,10 @@ func Init() characters.Character {
 			berserker := characters.NewBerserker(name)
 			character = berserker.Character
 		}
+		character.Inventory = append(
+			character.Inventory,
+			item.NewRevivalPotion(),
+		)
 	} else {
 		fmt.Println("Choix invalide")
 	}

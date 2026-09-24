@@ -170,21 +170,70 @@ func Defend(player *characters.Character) {
 }
 
 func UseSkill(player *characters.Character, enemy *Enemy) {
+	var choice int
+
 	switch player.Class {
 	case "Gobelin":
-		GobelinSkill(player, enemy)
+		fmt.Println("\n=== COMPÉTENCES GOBELIN ===")
+		fmt.Println("1. 🪙 Pile ou Face")
+		fmt.Println("2. 🔪 Coup Vicieux")
+		fmt.Println("3. 🎲 Dé Truqué")
+		fmt.Print("> ")
+
+		fmt.Scan(&choice)
+
+		switch choice {
+		case 1:
+			GobelinSkill(player, enemy)
+		case 2:
+			GobelinCoupVicieux(player, enemy)
+		case 3:
+			GobelinDeTruque(player, enemy)
+		default:
+			fmt.Println("Choix invalide.")
+		}
 
 	case "Vampire":
-		VampireSkill(player, enemy)
+		fmt.Println("\n=== COMPÉTENCES VAMPIRE ===")
+		fmt.Println("1. 🩸 Drain Vampirique")
+		fmt.Println("2. 🧛 Morsure")
+		fmt.Println("3. 🩸 Sacrifice Sanguin")
+		fmt.Print("> ")
+
+		fmt.Scan(&choice)
+
+		switch choice {
+		case 1:
+			VampireSkill(player, enemy)
+		case 2:
+			VampireMorsure(player, enemy)
+		case 3:
+			VampireSacrifice(player, enemy)
+		default:
+			fmt.Println("Choix invalide.")
+		}
 
 	case "Berserker":
-		BerserkerSkill(player, enemy)
+		fmt.Println("\n=== COMPÉTENCES BERSERKER ===")
+		fmt.Println("1. 💢 Rage")
+		fmt.Println("2. 🪓 Exécution")
+		fmt.Println("3. 🔥 Frénésie")
+		fmt.Print("> ")
 
-	default:
-		fmt.Println("\nCette classe n'a pas encore de compétence.")
+		fmt.Scan(&choice)
+
+		switch choice {
+		case 1:
+			BerserkerSkill(player, enemy)
+		case 2:
+			BerserkerExecution(player, enemy)
+		case 3:
+			BerserkerFrenesie(player, enemy)
+		default:
+			fmt.Println("Choix invalide.")
+		}
 	}
 }
-
 func EnemyTurn(player *characters.Character, enemy *Enemy, defending bool) {
 	damage := enemy.Attack - player.BaseDefense
 	if defending {
