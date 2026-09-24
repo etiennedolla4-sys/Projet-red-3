@@ -1,199 +1,145 @@
-package npc
+package blacksmith
 
 import (
-	"fmt"
-
 	"Projet-red-3/characters"
-	"Projet-red-3/item"
+	"Projet-red-3/ui/text"
+	"fmt"
 )
 
-const equipmentPrice = 20
+var blacksmithFirstTime = true
 
 func Blacksmith(p *characters.Character) {
+	message := fmt.Sprintf(
+		"Une chaleur étouffante vous frappe lorsque vous entrez dans la forge. Le bruit du marteau résonne contre les murs tandis que des étincelles volent dans tous les sens. Derrière son enclume, un forgeron imposant vous observe.\n%s : « Tu veux renforcer ton équipement ? Alors montre-moi ce que tu as. Une bonne armure peut faire la différence entre rentrer vivant et finir au fond de Veyr. »",
+		text.Color("Gareth", "31"),
+	)
+
+	if blacksmithFirstTime {
+		text.PrintSlow(message)
+		blacksmithFirstTime = false
+	}
+
 	for {
-		fmt.Println()
-		fmt.Println("========== FORGERON ==========")
-		fmt.Println("Classe :", p.Class)
+		fmt.Println("\n========== FORGERON ==========")
 		fmt.Println("Gold :", p.Gold)
 		fmt.Println()
-
-		equipmentList := GetEquipmentList(p.Class)
-
-		if len(equipmentList) == 0 {
-			fmt.Println("Aucun équipement disponible pour cette classe.")
-			fmt.Println("0. Retour")
-			fmt.Print("Votre choix : ")
-
-			var choice int
-			fmt.Scan(&choice)
-
-			if choice == 0 {
-				return
-			}
-
-			continue
-		}
-
-		for i, equipment := range equipmentList {
-			fmt.Printf(
-				"%d. %s - %d Gold\n",
-				i+1,
-				equipment.Name(),
-				equipmentPrice,
-			)
-		}
-
+		fmt.Println("1. Fabriquer un équipement")
+		fmt.Println("2. Équiper un équipement")
+		fmt.Println("3. Voir mes équipements")
 		fmt.Println("0. Retour")
 		fmt.Print("Votre choix : ")
 
 		var choice int
 		fmt.Scan(&choice)
 
-		if choice == 0 {
+		switch choice {
+		case 1:
+			craftingMenu(p)
+
+		case 2:
+			equipmentMenu(p)
+
+		case 3:
+			displayEquipment(p)
+
+		case 0:
 			return
-		}
 
-		if choice < 1 || choice > len(equipmentList) {
+		default:
 			fmt.Println("Choix invalide.")
-			continue
 		}
-
-		equipment := equipmentList[choice-1]
-
-		if p.Gold < equipmentPrice {
-			fmt.Println()
-			fmt.Println("Vous n'avez pas assez de Gold !")
-			continue
-		}
-
-		if len(p.Inventory) >= p.MaxInventory {
-			fmt.Println()
-			fmt.Println("Votre inventaire est plein !")
-			continue
-		}
-
-		p.Gold -= equipmentPrice
-		p.Inventory = append(p.Inventory, equipment)
-
-		ApplyEquipmentBonus(p, equipment)
-
-		fmt.Println()
-		fmt.Println("========== ÉQUIPEMENT ==========")
-		fmt.Println("Vous avez obtenu :", equipment.Name())
-		fmt.Println("L'équipement a été ajouté à votre inventaire.")
-
-		fmt.Println()
-		fmt.Println("========== BONUS ==========")
-
-		if equipment.AttackBonus > 0 {
-			fmt.Printf("+%d Attaque\n", equipment.AttackBonus)
-		}
-
-		if equipment.DefenseBonus > 0 {
-			fmt.Printf("+%d Défense\n", equipment.DefenseBonus)
-		}
-
-		if equipment.InitiativeBonus > 0 {
-			fmt.Printf("+%d Initiative\n", equipment.InitiativeBonus)
-		}
-
-		if equipment.HPBonus > 0 {
-			fmt.Printf("+%d PV maximum\n", equipment.HPBonus)
-		}
-
-		fmt.Println()
-		fmt.Println("Gold restant :", p.Gold)
 	}
 }
 
-func GetEquipmentList(class string) []item.BasicItem {
-	switch class {
+func craftingMenu(p *characters.Character) {
+	fmt.Println("\n===== FABRICATION =====")
+	fmt.Println("1. Chapeau de l'aventurier")
+	fmt.Println("   Plume de Corbeau + Cuir de Sanglier")
+	fmt.Println()
+	fmt.Println("2. Tunique de l'aventurier")
+	fmt.Println("   2x Fourrure de Loup + Peau de Troll")
+	fmt.Println()
+	fmt.Println("3. Bottes de l'aventurier")
+	fmt.Println("   Fourrure de Loup + Cuir de Sanglier")
+	fmt.Println()
+	fmt.Println("Coût : 5 Gold")
+	fmt.Println("0. Retour")
+	fmt.Print("Votre choix : ")
 
-	case "Gobelin":
-		return []item.BasicItem{
-			{
-				ItemName:        "Hache du Gobelin",
-				ItemDescription: "Une petite hache adaptée aux Gobelins.",
-				ItemType:        "Équipement",
-				AttackBonus:     8,
-			},
-			{
-				ItemName:        "Armure légère du Gobelin",
-				ItemDescription: "Une armure légère qui protège sans ralentir.",
-				ItemType:        "Équipement",
-				DefenseBonus:    5,
-			},
-			{
-				ItemName:        "Bottes rapides du Gobelin",
-				ItemDescription: "Des bottes permettant de se déplacer rapidement.",
-				ItemType:        "Équipement",
-				InitiativeBonus: 5,
-			},
-		}
+	var choice int
+	fmt.Scan(&choice)
 
-	case "Vampire":
-		return []item.BasicItem{
-			{
-				ItemName:        "Cape du Vampire",
-				ItemDescription: "Une cape sombre adaptée aux vampires.",
-				ItemType:        "Équipement",
-				InitiativeBonus: 4,
-				HPBonus:         10,
-			},
-			{
-				ItemName:        "Armure sanguinaire",
-				ItemDescription: "Une armure imprégnée d'énergie sanguinaire.",
-				ItemType:        "Équipement",
-				DefenseBonus:    7,
-				HPBonus:         15,
-			},
-			{
-				ItemName:        "Bottes nocturnes",
-				ItemDescription: "Des bottes silencieuses adaptées à la nuit.",
-				ItemType:        "Équipement",
-				InitiativeBonus: 8,
-			},
-		}
-
-	case "Berserker":
-		return []item.BasicItem{
-			{
-				ItemName:        "Grande Hache du Berserker",
-				ItemDescription: "Une énorme hache conçue pour infliger de lourds dégâts.",
-				ItemType:        "Équipement",
-				AttackBonus:     15,
-			},
-			{
-				ItemName:        "Armure du Berserker",
-				ItemDescription: "Une armure lourde protégeant son porteur.",
-				ItemType:        "Équipement",
-				DefenseBonus:    10,
-				HPBonus:         20,
-			},
-			{
-				ItemName:        "Gants de Rage",
-				ItemDescription: "Des gants renforçant la puissance des attaques.",
-				ItemType:        "Équipement",
-				AttackBonus:     10,
-				InitiativeBonus: 3,
-			},
-		}
-
-	default:
-		return []item.BasicItem{}
+	if choice != 0 {
+		CraftEquipment(p, choice)
 	}
 }
 
-func ApplyEquipmentBonus(
-	p *characters.Character,
-	equipment item.BasicItem,
-) {
-	p.BaseAttack += equipment.AttackBonus
-	p.BaseDefense += equipment.DefenseBonus
-	p.Initiative += equipment.InitiativeBonus
+func equipmentMenu(p *characters.Character) {
+	fmt.Println("\n===== ÉQUIPEMENT =====")
 
-	if equipment.HPBonus > 0 {
-		p.MaxHP += equipment.HPBonus
-		p.HP += equipment.HPBonus
+	found := false
+	var indexes []int
+
+	for i, inventoryItem := range p.Inventory {
+		if inventoryItem.Type() == "head" ||
+			inventoryItem.Type() == "chest" ||
+			inventoryItem.Type() == "feet" {
+
+			indexes = append(indexes, i)
+
+			fmt.Printf(
+				"%d. %s\n",
+				len(indexes),
+				inventoryItem.Name(),
+			)
+
+			found = true
+		}
 	}
+
+	if !found {
+		fmt.Println("Vous n'avez aucun équipement à équiper.")
+		return
+	}
+
+	fmt.Println("0. Retour")
+	fmt.Print("Votre choix : ")
+
+	var choice int
+	fmt.Scan(&choice)
+
+	if choice == 0 {
+		return
+	}
+
+	if choice < 1 || choice > len(indexes) {
+		fmt.Println("Choix invalide.")
+		return
+	}
+
+	EquipEquipment(p, indexes[choice-1])
+}
+
+func displayEquipment(p *characters.Character) {
+	fmt.Println("\n===== ÉQUIPEMENTS ÉQUIPÉS =====")
+
+	if p.Equipment.Head == "" {
+		fmt.Println("Tête  : Aucun")
+	} else {
+		fmt.Println("Tête  :", p.Equipment.Head)
+	}
+
+	if p.Equipment.Chest == "" {
+		fmt.Println("Torse : Aucun")
+	} else {
+		fmt.Println("Torse :", p.Equipment.Chest)
+	}
+
+	if p.Equipment.Feet == "" {
+		fmt.Println("Pieds : Aucun")
+	} else {
+		fmt.Println("Pieds :", p.Equipment.Feet)
+	}
+
+	fmt.Printf("\nPV maximum : %d\n", p.MaxHP)
 }
