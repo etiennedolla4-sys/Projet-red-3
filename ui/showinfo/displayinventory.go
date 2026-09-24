@@ -47,13 +47,20 @@ func DisplayInventory(p *characters.Character) {
 		switch object.Name() {
 		case "Potion de vie":
 			if inventory.UseHealthPotion(p, index) {
-				fmt.Println("\nVous utilisez une Potion de vie.")
+				fmt.Println("\n❤️ Vous utilisez une Potion de vie.")
 				fmt.Printf("PV : %d / %d\n", p.HP, p.MaxHP)
-			} else {
-				fmt.Println("Impossible d'utiliser cette potion.")
 			}
 
+		case "Potion de poison":
+			inventory.UsePoisonPotion(p, index)
+
 		default:
+			fmt.Println()
+			fmt.Println("========== OBJET ==========")
+			fmt.Println("Nom :", object.Name())
+			fmt.Println("Type :", object.Type())
+			fmt.Println("Description :", object.Description())
+			fmt.Println()
 			fmt.Println("Cet objet ne peut pas encore être utilisé.")
 		}
 	}

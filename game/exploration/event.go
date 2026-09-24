@@ -18,21 +18,19 @@ func RandomEvent(character *characters.Character, depth int) {
 		FindChest(character)
 
 	case 2:
-		StartEncounter(character)
+		StartEncounter(character, depth)
 
 	case 3:
 		FindRest(character)
 	}
-
-	_ = depth
 }
 
-func StartEncounter(character *characters.Character) {
-	enemy := combat.NewSlime()
+func StartEncounter(character *characters.Character, depth int) {
+	enemy := combat.GetRandomEnemy(depth)
 
 	fmt.Println()
 	fmt.Println("========== RENCONTRE ==========")
-	fmt.Println("Une créature apparaît dans les profondeurs !")
+	fmt.Printf("Un %s apparaît dans les profondeurs !\n", enemy.Name)
 
 	combat.StartCombat(character, &enemy)
 }

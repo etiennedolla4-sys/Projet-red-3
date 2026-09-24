@@ -3,15 +3,14 @@ package game
 import (
 	"Projet-red-3/characters"
 	"fmt"
-	"math/rand"
 )
 
 func Start(character *characters.Character) {
 	currentLayer := 1
-	x := 2
-	y := 2
+	x := 3
+	y := 3
 
-	gameMap := NewMap(5, 5)
+	gameMap := NewMap(7, 7)
 
 	for {
 		if character.HP <= 0 {
@@ -37,10 +36,9 @@ func Start(character *characters.Character) {
 		fmt.Printf("Or : %d\n", character.Gold)
 
 		fmt.Println()
-		fmt.Println("1. Explorer")
+		fmt.Println("1. Se déplacer")
 		fmt.Println("2. Observer")
 		fmt.Println("3. Descendre")
-		fmt.Println("4. Remonter")
 		fmt.Println("0. Quitter")
 		fmt.Print("Votre choix : ")
 
@@ -49,7 +47,7 @@ func Start(character *characters.Character) {
 
 		switch choice {
 		case 1:
-			Explore(character, gameMap, &x, &y, currentLayer)
+			Move(character, gameMap, &x, &y, currentLayer)
 
 		case 2:
 			Observe(layer, x, y)
@@ -60,8 +58,9 @@ func Start(character *characters.Character) {
 
 				x, y = findStartPosition(gameMap, currentLayer)
 
+				fmt.Println()
 				fmt.Printf(
-					"\nVous descendez vers la couche %d.\n",
+					"Vous descendez vers la couche %d.\n",
 					currentLayer,
 				)
 			} else {
@@ -69,28 +68,6 @@ func Start(character *characters.Character) {
 				fmt.Println(
 					"Vous êtes déjà dans la couche la plus profonde connue.",
 				)
-			}
-
-		case 4:
-			if currentLayer > 1 {
-				ApplyReturnEffect(character, currentLayer)
-
-				if character.HP <= 0 {
-					fmt.Println("Vous vous effondrez...")
-					return
-				}
-
-				currentLayer--
-
-				x, y = findStartPosition(gameMap, currentLayer)
-
-				fmt.Printf(
-					"\nVous remontez vers la couche %d.\n",
-					currentLayer,
-				)
-			} else {
-				fmt.Println()
-				fmt.Println("Vous êtes déjà à la surface.")
 			}
 
 		case 0:
@@ -105,46 +82,83 @@ func Start(character *characters.Character) {
 	}
 }
 
-func Explore(
+func Move(
 	character *characters.Character,
 	gameMap Map,
 	x *int,
 	y *int,
 	depth int,
 ) {
-	directions := [][2]int{
-		{0, 1},
-		{0, -1},
-		{1, 0},
-		{-1, 0},
+	fmt.Println()
+	fmt.Println("========== DÉPLACEMENT ==========")
+	fmt.Println("1. Aller en haut")
+	fmt.Println("2. Aller en bas")
+	fmt.Println("3. Aller à gauche")
+	fmt.Println("4. Aller à droite")
+	fmt.Println("0. Annuler")
+	fmt.Print("Votre choix : ")
+
+	var choice int
+	fmt.Scan(&choice)
+
+	newX := *x
+	newY := *y
+
+	switch choice {
+	case 1:
+		newY++
+
+	case 2:
+		newY--
+
+	case 3:
+		newX--
+
+	case 4:
+		newX++
+
+	case 0:
+		return
+
+	default:
+		fmt.Println()
+		fmt.Println("Choix invalide.")
+		return
 	}
-
-	direction := directions[rand.Intn(len(directions))]
-
-	newX := *x + direction[0]
-	newY := *y + direction[1]
 
 	if !gameMap.IsWalkable(newX, newY, depth) {
 		fmt.Println()
-		fmt.Println("Vous ne pouvez pas passer par ici.")
+		fmt.Println("Vous ne pouvez pas aller dans cette direction.")
 		return
 	}
 
 	*x = newX
 	*y = newY
 
+	fmt.Println()
 	fmt.Printf(
-		"\nVous avancez jusqu'à la position (%d, %d).\n",
+		"Vous vous déplacez vers la position (%d, %d).\n",
 		*x,
 		*y,
 	)
 
-	tile := gameMap.Tile(*x, *y, depth)
+	HandleTile(character, gameMap, *x, *y, depth)
+}
+
+func HandleTile(
+	character *characters.Character,
+	gameMap Map,
+	x int,
+	y int,
+	depth int,
+) {
+	tile := gameMap.Tile(x, y, depth)
 
 	switch tile {
 	case "!":
+		fmt.Println()
 		fmt.Println("Vous entrez dans une zone dangereuse !")
-		StartEncounter(character)
+		StartEncounter(character, depth)
 
 	case "T":
 		FindChest(character)
@@ -153,11 +167,7 @@ func Explore(
 		FindRest(character)
 
 	default:
-		if rand.Intn(100) < 30 {
-			RandomEvent(character, depth)
-		} else {
-			fmt.Println("Vous avancez sans rencontrer personne.")
-		}
+		fmt.Println("Vous avancez sans rencontrer personne.")
 	}
 }
 

@@ -27,12 +27,23 @@ func (m Map) IsWalkable(x, y, depth int) bool {
 }
 
 func (m Map) Display(playerX, playerY, depth int) {
+	legend := []string{
+		"@ = Vous",
+		". = Chemin",
+		"# = Mur",
+		"T = Trésor",
+		"! = Danger",
+		"+ = Repos",
+	}
+
 	fmt.Println()
-	fmt.Println("=======================================")
-	fmt.Printf("          CARTE - COUCHE %d\n", depth)
-	fmt.Println("=======================================")
+	fmt.Println("+-----------------+    +---------------------+")
+	fmt.Printf("|   CARTE - %d    |    |       LEGENDE       |\n", depth)
+	fmt.Println("+-----------------+    +---------------------+")
 
 	for y := m.Height - 1; y >= 0; y-- {
+		fmt.Print("| ")
+
 		for x := 0; x < m.Width; x++ {
 			if x == playerX && y == playerY {
 				fmt.Print("@ ")
@@ -41,17 +52,18 @@ func (m Map) Display(playerX, playerY, depth int) {
 			}
 		}
 
-		fmt.Println()
+		fmt.Print("      ")
+
+		legendIndex := m.Height - 1 - y
+
+		if legendIndex < len(legend) {
+			fmt.Printf("| %-19s |\n", legend[legendIndex])
+		} else {
+			fmt.Println("|                     |")
+		}
 	}
 
-	fmt.Println("=======================================")
-	fmt.Println("@ = Vous")
-	fmt.Println(". = Chemin")
-	fmt.Println("# = Mur")
-	fmt.Println("T = Trésor")
-	fmt.Println("! = Danger")
-	fmt.Println("+ = Repos")
-	fmt.Println("=======================================")
+	fmt.Println("+-----------------+    +---------------------+")
 }
 
 func (m Map) Tile(x, y, depth int) string {
@@ -72,11 +84,11 @@ func (m Map) Tile(x, y, depth int) string {
 }
 
 func surfaceTile(x, y int) string {
-	if x == 0 && y == 4 {
+	if x == 0 && y == 6 {
 		return "T"
 	}
 
-	if x == 4 && y == 0 {
+	if x == 6 && y == 0 {
 		return "+"
 	}
 
@@ -84,15 +96,15 @@ func surfaceTile(x, y int) string {
 }
 
 func ruinsTile(x, y int) string {
-	if x == 1 && y == 3 {
+	if x == 1 && y == 5 {
 		return "#"
 	}
 
-	if x == 3 && y == 1 {
+	if x == 5 && y == 1 {
 		return "T"
 	}
 
-	if x == 4 && y == 4 {
+	if x == 6 && y == 5 {
 		return "!"
 	}
 
@@ -104,11 +116,11 @@ func forestTile(x, y int) string {
 		return "!"
 	}
 
-	if x == 3 && y == 4 {
+	if x == 5 && y == 6 {
 		return "T"
 	}
 
-	if x == 4 && y == 2 {
+	if x == 6 && y == 2 {
 		return "+"
 	}
 
@@ -116,19 +128,19 @@ func forestTile(x, y int) string {
 }
 
 func caveTile(x, y int) string {
-	if x == 0 || x == 4 {
+	if x == 0 || x == 6 {
 		return "#"
 	}
 
-	if x == 2 && y == 4 {
+	if x == 3 && y == 6 {
 		return "!"
 	}
 
-	if x == 3 && y == 1 {
+	if x == 5 && y == 1 {
 		return "T"
 	}
 
-	if x == 1 && y == 2 {
+	if x == 1 && y == 3 {
 		return "+"
 	}
 
@@ -136,15 +148,15 @@ func caveTile(x, y int) string {
 }
 
 func abyssTile(x, y int) string {
-	if x == 0 || x == 4 || y == 0 {
+	if x == 0 || x == 6 || y == 0 {
 		return "#"
 	}
 
-	if x == 2 && y == 3 {
+	if x == 3 && y == 5 {
 		return "!"
 	}
 
-	if x == 3 && y == 2 {
+	if x == 5 && y == 3 {
 		return "T"
 	}
 

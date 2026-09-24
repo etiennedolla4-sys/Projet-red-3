@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"Projet-red-3/characters"
+	"Projet-red-3/item"
 )
 
 func Merchant(p *characters.Character) {
@@ -22,43 +23,71 @@ func Merchant(p *characters.Character) {
 	var choice int
 	fmt.Scan(&choice)
 
-	var object string
+	var object item.BasicItem
 	var price int
 
 	switch choice {
 	case 1:
-		object = "Potion de vie"
+		object = item.BasicItem{
+			ItemName:        "Potion de vie",
+			ItemDescription: "Restaure des points de vie.",
+			ItemType:        "Potion",
+		}
 		price = 3
 
 	case 2:
-		object = "Potion de poison"
+		object = item.BasicItem{
+			ItemName:        "Potion de poison",
+			ItemDescription: "Inflige des dégâts pendant quelques secondes.",
+			ItemType:        "Potion",
+		}
 		price = 6
 
 	case 3:
-		object = "Livre de Sort : Boule de Feu"
+		object = item.BasicItem{
+			ItemName:        "Livre de Sort : Boule de Feu",
+			ItemDescription: "Permet d'apprendre le sort Boule de Feu.",
+			ItemType:        "Livre",
+		}
 		price = 25
 
 	case 4:
-		object = "Fourrure de Loup"
+		object = item.BasicItem{
+			ItemName:        "Fourrure de Loup",
+			ItemDescription: "Une fourrure provenant d'un loup.",
+			ItemType:        "Ressource",
+		}
 		price = 4
 
 	case 5:
-		object = "Peau de Troll"
+		object = item.BasicItem{
+			ItemName:        "Peau de Troll",
+			ItemDescription: "Une peau épaisse provenant d'un troll.",
+			ItemType:        "Ressource",
+		}
 		price = 7
 
 	case 6:
-		object = "Cuir de Sanglier"
+		object = item.BasicItem{
+			ItemName:        "Cuir de Sanglier",
+			ItemDescription: "Du cuir provenant d'un sanglier.",
+			ItemType:        "Ressource",
+		}
 		price = 3
 
 	case 7:
-		object = "Plume de Corbeau"
+		object = item.BasicItem{
+			ItemName:        "Plume de Corbeau",
+			ItemDescription: "Une plume noire de corbeau.",
+			ItemType:        "Ressource",
+		}
 		price = 1
 
 	case 0:
 		return
 
 	default:
-		fmt.Println("Choix invalide")
+		fmt.Println("Choix invalide.")
 		return
 	}
 
@@ -67,8 +96,16 @@ func Merchant(p *characters.Character) {
 		return
 	}
 
-	p.Gold -= price
+	if len(p.Inventory) >= p.MaxInventory {
+		fmt.Println("Votre inventaire est plein !")
+		return
+	}
 
-	fmt.Println("Vous avez acheté :", object)
+	p.Gold -= price
+	p.Inventory = append(p.Inventory, object)
+
+	fmt.Println()
+	fmt.Println("Vous avez acheté :", object.Name())
+	fmt.Println("L'objet a été ajouté à votre inventaire.")
 	fmt.Println("Gold restant :", p.Gold)
 }
