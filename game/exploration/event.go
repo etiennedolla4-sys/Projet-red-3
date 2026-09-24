@@ -2,12 +2,13 @@ package game
 
 import (
 	"Projet-red-3/characters"
+	"Projet-red-3/game/combat"
 	"fmt"
 	"math/rand"
 )
 
-func RandomEvent(character *characters.Character) {
-	event := rand.Intn(5)
+func RandomEvent(character *characters.Character, depth int) {
+	event := rand.Intn(4)
 
 	switch event {
 	case 0:
@@ -17,21 +18,31 @@ func RandomEvent(character *characters.Character) {
 		FindChest(character)
 
 	case 2:
-		EncounterEnemy(character)
+		StartEncounter(character)
 
 	case 3:
 		FindRest(character)
-
-	case 4:
-		NothingHappens()
 	}
+
+	_ = depth
+}
+
+func StartEncounter(character *characters.Character) {
+	enemy := combat.NewSlime()
+
+	fmt.Println()
+	fmt.Println("========== RENCONTRE ==========")
+	fmt.Println("Une créature apparaît dans les profondeurs !")
+
+	combat.StartCombat(character, &enemy)
 }
 
 func FindResource(character *characters.Character) {
 	gold := rand.Intn(20) + 5
 	character.Gold += gold
 
-	fmt.Println("\n========== RESSOURCE ==========")
+	fmt.Println()
+	fmt.Println("========== RESSOURCE ==========")
 	fmt.Println("Vous trouvez une petite ressource.")
 	fmt.Printf("Vous gagnez %d pièces d'or.\n", gold)
 }
@@ -40,26 +51,10 @@ func FindChest(character *characters.Character) {
 	gold := rand.Intn(50) + 10
 	character.Gold += gold
 
-	fmt.Println("\n========== COFFRE ==========")
+	fmt.Println()
+	fmt.Println("========== COFFRE ==========")
 	fmt.Println("Vous découvrez un ancien coffre.")
 	fmt.Printf("Vous trouvez %d pièces d'or.\n", gold)
-}
-
-func EncounterEnemy(character *characters.Character) {
-	damage := rand.Intn(15) + 5
-
-	fmt.Println("\n========== RENCONTRE ==========")
-	fmt.Println("Une créature des profondeurs apparaît !")
-	fmt.Println("Vous parvenez à vous défendre.")
-
-	character.HP -= damage
-
-	if character.HP < 0 {
-		character.HP = 0
-	}
-
-	fmt.Printf("Vous perdez %d PV.\n", damage)
-	fmt.Printf("PV : %d / %d\n", character.HP, character.MaxHP)
 }
 
 func FindRest(character *characters.Character) {
@@ -71,13 +66,9 @@ func FindRest(character *characters.Character) {
 		character.HP = character.MaxHP
 	}
 
-	fmt.Println("\n========== REPOS ==========")
+	fmt.Println()
+	fmt.Println("========== REPOS ==========")
 	fmt.Println("Vous trouvez un endroit relativement sûr.")
 	fmt.Printf("Vous récupérez %d PV.\n", heal)
 	fmt.Printf("PV : %d / %d\n", character.HP, character.MaxHP)
-}
-
-func NothingHappens() {
-	fmt.Println("\nVous avancez dans le silence...")
-	fmt.Println("Rien ne semble vous attendre ici.")
 }

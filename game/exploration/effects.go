@@ -23,4 +23,10 @@ func ApplyReturnEffect(character *characters.Character, depth int) {
 		"La pression des profondeurs vous affecte : -%d PV.\n",
 		damage,
 	)
+
+	fmt.Printf(
+		"PV : %d / %d\n",
+		character.HP,
+		character.MaxHP,
+	)
 }
