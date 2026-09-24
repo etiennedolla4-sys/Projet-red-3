@@ -269,7 +269,7 @@ Projet-red-3/
 
 ### Gestion du projet
 
-* Git
+* Git 2.53.0
 * GitHub
 
 ### Licence
