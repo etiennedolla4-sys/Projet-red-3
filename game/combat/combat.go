@@ -5,6 +5,7 @@ import (
 	"Projet-red-3/enemy"
 	"fmt"
 	"math/rand"
+	"os"
 )
 
 func StartCombat(player *characters.Character, enemy *enemy.Monster) {
@@ -14,7 +15,7 @@ func StartCombat(player *characters.Character, enemy *enemy.Monster) {
 
 	fmt.Printf("\n%s VS %s\n", player.Name, enemy.Name)
 
-	// determine qui commence
+	// Détermine qui commence
 	playerInitiative := player.Initiative + rand.Intn(10)
 	enemyInitiative := enemy.Initiative + rand.Intn(10)
 
@@ -25,7 +26,11 @@ func StartCombat(player *characters.Character, enemy *enemy.Monster) {
 		DisplayCombat(player, enemy)
 
 		if playerTurn {
-			PlayerTurn(player, enemy)
+			fuite := PlayerTurn(player, enemy)
+
+			if fuite {
+				return
+			}
 		} else {
 			EnemyTurn(player, enemy)
 		}
@@ -78,7 +83,7 @@ func DisplayCombat(player *characters.Character, enemy *enemy.Monster) {
 	fmt.Println("╚══════════════════════════════════════╝")
 }
 
-func PlayerTurn(player *characters.Character, enemy *enemy.Monster) {
+func PlayerTurn(player *characters.Character, enemy *enemy.Monster) bool {
 	var choice int
 
 	fmt.Println("\nQue voulez-vous faire ?")
@@ -103,11 +108,12 @@ func PlayerTurn(player *characters.Character, enemy *enemy.Monster) {
 
 	case 4:
 		fmt.Println("\nVous prenez la fuite !")
-		enemy.HP = 0
+		return true
 
 	default:
 		fmt.Println("\nChoix invalide.")
 	}
+	return false
 }
 
 func Attack(player *characters.Character, enemy *enemy.Monster) {
@@ -172,6 +178,7 @@ func EndCombat(player *characters.Character, enemy *enemy.Monster) {
 
 	if player.HP <= 0 {
 		fmt.Println("💀 Vous avez été vaincu...")
+		os.Exit(0)
 	} else {
 		fmt.Printf("🏆 Vous avez vaincu %s !\n", enemy.Name)
 

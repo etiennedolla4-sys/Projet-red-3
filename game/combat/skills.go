@@ -14,7 +14,7 @@ func GobelinSkill(player *characters.Character, enemy *enemy.Monster) {
 
 	if result == 0 {
 		fmt.Println("PILE !")
-		fmt.Println("💀 C !")
+		fmt.Println("💀 Coup de malade !")
 		enemy.HP /= 2
 	} else {
 		fmt.Println("FACE !")
