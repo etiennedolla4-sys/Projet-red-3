@@ -1,10 +1,6 @@
 package characters
 
-type Equipment struct {
-	Head  string
-	Torso string
-	Feet  string
-}
+import "Projet-red-3/item"
 
 type Character struct {
 	Name         string
@@ -15,7 +11,7 @@ type Character struct {
 	BaseAttack   int
 	BaseDefense  int
 	Initiative   int
-	Inventory    []string
+	Inventory    []item.Item
 	MaxInventory int
 	MaxHP        int
 	MaxMP        int
@@ -23,5 +19,4 @@ type Character struct {
 	Lvl          int
 	Gold         int
 	Skills       []string
-	Equipment    Equipment
 }

@@ -1,16 +1,14 @@
-package item
+package potion
 
 import (
 	"Projet-red-3/characters"
-
-	"Projet-red-3/save"
 	"fmt"
 	"time"
 )
 
 func TakePoisonPotion(c *characters.Character) {
 	for i, object := range c.Inventory {
-		if object == "Potion de poison" {
+		if object.Name() == "Potion de poison" {
 			c.Inventory = append(c.Inventory[:i], c.Inventory[i+1:]...)
 			break
 		}
@@ -27,6 +25,5 @@ func TakePoisonPotion(c *characters.Character) {
 		}
 
 		fmt.Printf("PV : %d / %d\n", c.HP, c.MaxHP)
-		save.Dead(c)
 	}
 }

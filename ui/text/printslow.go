@@ -1,4 +1,4 @@
-package printslow
+package text
 
 import (
 	"fmt"

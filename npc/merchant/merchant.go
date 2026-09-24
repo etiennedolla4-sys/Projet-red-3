@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"Projet-red-3/characters"
-	"Projet-red-3/item"
 )
 
 func Merchant(p *characters.Character) {
@@ -65,10 +64,6 @@ func Merchant(p *characters.Character) {
 
 	if p.Gold < price {
 		fmt.Println("Vous n'avez pas assez de Gold !")
-		return
-	}
-
-	if !item.AddInventory(p, object) {
 		return
 	}
 

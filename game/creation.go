@@ -1,11 +1,11 @@
 package game
 
 import (
+	"Projet-red-3/characters"
+	"Projet-red-3/item"
 	"fmt"
 	"strings"
 	"unicode"
-
-	"Projet-red-3/characters"
 )
 
 func CharCreation() characters.Character {
@@ -40,19 +40,26 @@ func CharCreation() characters.Character {
 
 	var p characters.Character
 
+	p.Name = name
+	p.Lvl = 1
+	p.HP = 50
+	p.MP = 0
+	p.Inventory = []item.Item{}
+	p.MaxInventory = 10
+	p.Skills = []string{"Coup de poing"}
+
 	switch classe {
 	case 1:
-		gobelin := characters.NewGobelin(name)
-		p = gobelin.Character
+		p.Class = "Gobelin"
+		p.MaxHP = 100
 
 	case 2:
-		vampire := characters.NewVampire(name)
-		p = vampire.Character
+		p.Class = "Vampire"
+		p.MaxHP = 80
 
-	default:
-		fmt.Println("Choix invalide")
-		return CharCreation()
 	}
+
+	p.HP = p.MaxHP / 2
 
 	return p
 }

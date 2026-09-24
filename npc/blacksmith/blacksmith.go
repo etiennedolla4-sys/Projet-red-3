@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"Projet-red-3/characters"
-	"Projet-red-3/item"
 )
 
 func Blacksmith(p *characters.Character) {
@@ -41,10 +40,6 @@ func Blacksmith(p *characters.Character) {
 
 	if p.Gold < 5 {
 		fmt.Println("Vous n'avez pas assez de Gold !")
-		return
-	}
-
-	if !item.AddInventory(p, equipment) {
 		return
 	}
 
