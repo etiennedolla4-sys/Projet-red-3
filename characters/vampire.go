@@ -11,7 +11,7 @@ func NewVampire(name string) Vampire {
 		Character{
 			Name:         name,
 			Class:        "Vampire",
-			Description:  "Truc",
+			Description:  "Le Vampire est une créature mystérieuse qui se nourrit de ses adversaires pour récupérer ses forces.",
 			HP:           60,
 			MP:           10,
 			BaseAttack:   20,

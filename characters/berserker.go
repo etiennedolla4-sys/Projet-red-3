@@ -2,17 +2,17 @@ package characters
 
 import "Projet-red-3/item"
 
-type berserker struct {
+type Berserker struct {
 	Character
 }
 
-func NewBerserker(name string) berserker {
-	return berserker{
+func NewBerserker(name string) Berserker {
+	return Berserker{
 		Character{
-		
+
 			Name:         name,
 			Class:        "berserker",
-			Description:  "Truc",
+			Description:  "Le Berserker est un combattant puissant qui privilégie la force brute et les attaques dévastatrices.",
 			HP:           55,
 			MP:           0,
 			BaseAttack:   15,

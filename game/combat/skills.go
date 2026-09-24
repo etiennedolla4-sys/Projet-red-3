@@ -43,3 +43,27 @@ func VampireSkill(player *characters.Character, enemy *Enemy) {
 	fmt.Printf("Vous infligez %d dégâts.\n", damage)
 	fmt.Printf("Vous récupérez %d PV.\n", heal)
 }
+
+func BerserkerSkill(player *characters.Character, enemy *Enemy) {
+	fmt.Println("\n💢 RAGE DU BERSERKER !")
+
+	damage := player.BaseAttack + 20
+
+	enemy.HP -= damage
+
+	if enemy.HP < 0 {
+		enemy.HP = 0
+	}
+
+	recoil := 10
+
+	player.HP -= recoil
+
+	if player.HP < 0 {
+		player.HP = 0
+	}
+
+	fmt.Printf("💥 Vous infligez %d dégâts !\n", damage)
+	fmt.Printf("La puissance de l'attaque vous fait perdre %d PV.\n", recoil)
+	fmt.Printf("PV : %d / %d\n", player.HP, player.MaxHP)
+}

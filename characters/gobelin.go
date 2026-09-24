@@ -11,7 +11,7 @@ func NewGobelin(name string) Gobelin {
 		Character{
 			Name:         name,
 			Class:        "Gobelin",
-			Description:  "Truc",
+			Description:  "Petit et rusé, le Gobelin mise sur sa rapidité et son agilité pour surprendre ses ennemis.",
 			HP:           50,
 			MP:           0,
 			BaseAttack:   20,

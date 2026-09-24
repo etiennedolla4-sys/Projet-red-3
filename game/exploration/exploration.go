@@ -2,6 +2,7 @@ package game
 
 import (
 	"Projet-red-3/characters"
+	"Projet-red-3/utils"
 	"fmt"
 )
 
@@ -135,7 +136,8 @@ func Move(
 	*x = newX
 	*y = newY
 
-	fmt.Println()
+	utils.ClearTerminal()
+
 	fmt.Printf(
 		"Vous vous déplacez vers la position (%d, %d).\n",
 		*x,
