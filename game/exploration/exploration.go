@@ -15,11 +15,16 @@ func Start(character *characters.Character) {
 
 	for {
 		if character.HP <= 0 {
+			utils.ClearTerminal()
+
 			fmt.Println()
 			fmt.Println("Vous n'avez plus assez de forces.")
 			fmt.Println("Votre exploration prend fin.")
+
 			return
 		}
+
+		utils.ClearTerminal()
 
 		layer := GetLayer(currentLayer)
 
@@ -48,7 +53,13 @@ func Start(character *characters.Character) {
 
 		switch choice {
 		case 1:
-			Move(character, gameMap, &x, &y, currentLayer)
+			Move(
+				character,
+				gameMap,
+				&x,
+				&y,
+				currentLayer,
+			)
 
 		case 2:
 			Observe(layer, x, y)
@@ -57,11 +68,8 @@ func Start(character *characters.Character) {
 			if currentLayer < 5 {
 				currentLayer++
 
-				x, y = findStartPosition(gameMap, currentLayer)
-
-				fmt.Println()
-				fmt.Printf(
-					"Vous descendez vers la couche %d.\n",
+				x, y = findStartPosition(
+					gameMap,
 					currentLayer,
 				)
 			} else {
@@ -72,8 +80,11 @@ func Start(character *characters.Character) {
 			}
 
 		case 0:
+			utils.ClearTerminal()
+
 			fmt.Println()
 			fmt.Println("Vous quittez les profondeurs.")
+
 			return
 
 		default:
@@ -138,13 +149,13 @@ func Move(
 
 	utils.ClearTerminal()
 
-	fmt.Printf(
-		"Vous vous déplacez vers la position (%d, %d).\n",
+	HandleTile(
+		character,
+		gameMap,
 		*x,
 		*y,
+		depth,
 	)
-
-	HandleTile(character, gameMap, *x, *y, depth)
 }
 
 func HandleTile(
@@ -157,23 +168,46 @@ func HandleTile(
 	tile := gameMap.Tile(x, y, depth)
 
 	switch tile {
-	case "!":
+	case "E":
 		fmt.Println()
-		fmt.Println("Vous entrez dans une zone dangereuse !")
+		fmt.Println("========== ENNEMI ==========")
+		fmt.Println("Un ennemi vous bloque le passage !")
+
 		StartEncounter(character, depth)
 
 	case "T":
+		fmt.Println()
+		fmt.Println("========== TRÉSOR ==========")
+
 		FindChest(character)
 
 	case "+":
+		fmt.Println()
+		fmt.Println("========== REPOS ==========")
+
 		FindRest(character)
 
 	default:
-		fmt.Println("Vous avancez sans rencontrer personne.")
+		fmt.Println()
+		fmt.Printf(
+			"Vous avancez vers la position (%d, %d).\n",
+			x,
+			y,
+		)
 	}
 }
 
-func findStartPosition(gameMap Map, depth int) (int, int) {
+func findStartPosition(
+	gameMap Map,
+	depth int,
+) (int, int) {
+	centerX := gameMap.Width / 2
+	centerY := gameMap.Height / 2
+
+	if gameMap.IsWalkable(centerX, centerY, depth) {
+		return centerX, centerY
+	}
+
 	for y := 0; y < gameMap.Height; y++ {
 		for x := 0; x < gameMap.Width; x++ {
 			if gameMap.IsWalkable(x, y, depth) {
@@ -185,11 +219,17 @@ func findStartPosition(gameMap Map, depth int) (int, int) {
 	return 0, 0
 }
 
-func Observe(layer Layer, x, y int) {
+func Observe(
+	layer Layer,
+	x int,
+	y int,
+) {
 	fmt.Println()
 	fmt.Println("========== OBSERVATION ==========")
 	fmt.Printf("Position : (%d, %d)\n", x, y)
 	fmt.Printf("Zone : %s\n", layer.Name)
 	fmt.Println(layer.Description)
-	fmt.Println("Vous ne remarquez rien d'inhabituel.")
+	fmt.Println()
+	fmt.Println("Vous observez les environs.")
+	fmt.Println("Les ennemis visibles apparaissent sur la carte.")
 }

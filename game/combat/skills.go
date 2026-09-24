@@ -14,11 +14,20 @@ func GobelinSkill(player *characters.Character, enemy *Enemy) {
 	if result == 0 {
 		fmt.Println("PILE !")
 		fmt.Println("💀 Coup mortel !")
+
 		enemy.HP = 0
 	} else {
 		fmt.Println("FACE !")
 		fmt.Println("💥 Malchance !")
+
 		player.HP /= 2
+
+		if player.HP < 0 {
+			player.HP = 0
+		}
+
+		fmt.Printf("Vous perdez la moitié de vos PV.\n")
+		fmt.Printf("PV : %d / %d\n", player.HP, player.MaxHP)
 	}
 }
 
@@ -39,9 +48,10 @@ func VampireSkill(player *characters.Character, enemy *Enemy) {
 		player.HP = player.MaxHP
 	}
 
-	fmt.Println("\n🩸 Drain vampirique !")
+	fmt.Println("\n🩸 DRAIN VAMPIRIQUE !")
 	fmt.Printf("Vous infligez %d dégâts.\n", damage)
 	fmt.Printf("Vous récupérez %d PV.\n", heal)
+	fmt.Printf("PV : %d / %d\n", player.HP, player.MaxHP)
 }
 
 func BerserkerSkill(player *characters.Character, enemy *Enemy) {
@@ -64,6 +74,9 @@ func BerserkerSkill(player *characters.Character, enemy *Enemy) {
 	}
 
 	fmt.Printf("💥 Vous infligez %d dégâts !\n", damage)
-	fmt.Printf("La puissance de l'attaque vous fait perdre %d PV.\n", recoil)
+	fmt.Printf(
+		"Vous perdez %d PV à cause de la puissance de l'attaque.\n",
+		recoil,
+	)
 	fmt.Printf("PV : %d / %d\n", player.HP, player.MaxHP)
 }
