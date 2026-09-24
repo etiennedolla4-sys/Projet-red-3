@@ -1,5 +1,0 @@
-package save
-
-func Load() {
-
-}

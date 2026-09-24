@@ -1,37 +1,21 @@
 package showinfo
 
 import (
-	"fmt"
-
 	"Projet-red-3/characters"
-	"Projet-red-3/item"
+	"fmt"
 )
 
-func DisplayInventory(p *characters.Character) {
-	fmt.Println("\n=== INVENTAIRE DU PERSONNAGE ===")
+func DisplayInventory(p characters.Character) {
+	fmt.Println("\n========== INVENTAIRE ==========")
 
-	for i, object := range p.Inventory {
-		fmt.Printf("%d. %s\n", i+1, object)
-	}
-
-	fmt.Println("0. Retour")
-	fmt.Print("Votre choix : ")
-
-	var choice int
-	fmt.Scan(&choice)
-
-	if choice == 0 {
+	if len(p.Inventory) == 0 {
+		fmt.Println("Votre inventaire est vide.")
 		return
 	}
 
-	if choice > 0 && choice <= len(p.Inventory) {
-		switch p.Inventory[choice-1] {
-		case "Potion de vie":
-			item.TakePotion(p)
-		case "Potion de mana":
-			item.TakeManaPotion(p)
-		case "Potion de poison":
-			item.TakePoisonPotion(p)
-		}
+	for i, object := range p.Inventory {
+		fmt.Printf("%d. %s\n", i+1, object.Name())
 	}
+
+	fmt.Printf("\n%d/%d objets\n", len(p.Inventory), p.MaxInventory)
 }

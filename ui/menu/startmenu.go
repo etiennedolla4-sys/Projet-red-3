@@ -2,7 +2,6 @@ package menu
 
 import (
 	"Projet-red-3/game"
-	"Projet-red-3/save"
 	"fmt"
 	"os"
 )
@@ -19,11 +18,7 @@ func StartMenu() {
 	case 1:
 		p := game.CharCreation()
 		DetecP(p)
-
 	case 2:
-		save.Load()
-
-	case 3:
 		fmt.Println("Ciao")
 		os.Exit(0)
 	}

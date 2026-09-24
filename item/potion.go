@@ -1,37 +1,19 @@
 package item
 
-type HealPotion struct {
+type Potion struct {
 	ItemName        string
 	ItemDescription string
-	HealAmount      int
+	ItemType        string
 }
 
-type ManaPotion struct {
-	ItemName        string
-	ItemDescription string
-	ManaAmount      int
-}
-
-func (p HealPotion) Name() string {
+func (p Potion) Name() string {
 	return p.ItemName
 }
 
-func (p HealPotion) Description() string {
+func (p Potion) Description() string {
 	return p.ItemDescription
 }
 
-func (p HealPotion) Type() string {
-	return "Potion de vie"
-}
-
-func (p ManaPotion) Name() string {
-	return p.ItemName
-}
-
-func (p ManaPotion) Description() string {
-	return p.ItemDescription
-}
-
-func (p ManaPotion) Type() string {
-	return "Potion de mana"
+func (p Potion) Type() string {
+	return p.ItemType
 }

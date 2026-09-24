@@ -1,11 +1,11 @@
 package game
 
 import (
+	"Projet-red-3/characters"
+	"Projet-red-3/item"
 	"fmt"
 	"strings"
 	"unicode"
-
-	"Projet-red-3/characters"
 )
 
 func CharCreation() characters.Character {
@@ -44,7 +44,7 @@ func CharCreation() characters.Character {
 	p.Lvl = 1
 	p.HP = 50
 	p.MP = 0
-	p.Inventory = []string{}
+	p.Inventory = []item.Item{}
 	p.MaxInventory = 10
 	p.Skills = []string{"Coup de poing"}
 

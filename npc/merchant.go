@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"Projet-red-3/characters"
+	"Projet-red-3/item"
 )
 
 func Merchant(p *characters.Character) {
@@ -23,7 +24,7 @@ func Merchant(p *characters.Character) {
 			return
 		}
 
-		p.Inventory = append(p.Inventory, "Potion de vie")
+		p.Inventory = append(p.Inventory, item.NewHealthPotion())
 		fmt.Println("Vous avez acheté : Potion de vie")
 
 	case 2:
@@ -32,7 +33,7 @@ func Merchant(p *characters.Character) {
 			return
 		}
 
-		p.Inventory = append(p.Inventory, "Potion de poison")
+		p.Inventory = append(p.Inventory, item.NewPoisonPotion())
 		fmt.Println("Vous avez acheté : Potion de poison")
 
 	case 0:

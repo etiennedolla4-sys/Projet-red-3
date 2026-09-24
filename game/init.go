@@ -2,7 +2,7 @@ package game
 
 import (
 	"Projet-red-3/characters"
-	"Projet-red-3/text"
+	"Projet-red-3/ui/text"
 	"fmt"
 )
 
