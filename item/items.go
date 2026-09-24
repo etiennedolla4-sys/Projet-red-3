@@ -23,6 +23,14 @@ func NewPoisonPotion() Potion {
 		ItemType:        "Potion",
 	}
 }
+
+func NewRevivalPotion() Potion {
+	return Potion{
+		ItemName:        "Potion de réanimation",
+		ItemDescription: "Vous réanime automatiquement une seule fois avec 50% de vos PV maximum.",
+		ItemType:        "Potion",
+	}
+}
 func NewFireballBook() SpellBook {
 	return SpellBook{
 		ItemName:        "Livre de Sort : Boule de Feu",

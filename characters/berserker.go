@@ -11,7 +11,7 @@ func NewBerserker(name string) Berserker {
 		Character{
 
 			Name:         name,
-			Class:        "berserker",
+			Class:        "Berserker",
 			Description:  "Le Berserker est un combattant puissant qui privilégie la force brute et les attaques dévastatrices.",
 			HP:           55,
 			MP:           0,

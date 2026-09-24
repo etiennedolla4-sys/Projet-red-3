@@ -4,10 +4,9 @@ import (
 	"Projet-red-3/characters"
 	"Projet-red-3/game/combat"
 	exploration "Projet-red-3/game/exploration"
-	"Projet-red-3/npc/blacksmith"
+	blacksmith "Projet-red-3/npc/blacksmith"
 	merchant "Projet-red-3/npc/merchant"
 	"Projet-red-3/ui/showinfo"
-	"Projet-red-3/ui/text"
 	"Projet-red-3/utils"
 	"fmt"
 	"os"
@@ -23,15 +22,23 @@ func DetecP(p *characters.Character) {
 	}
 	defer term.Restore(int(os.Stdin.Fd()), oldState)
 
-	fmt.Println("Appuyez sur P pour ouvrir le menu.")
+	fmt.Println("╔════════════════════════════════════════╗")
+	fmt.Println("║                                        ║")
+	fmt.Println("║       V E Y R  -  A V E N T U R E      ║")
+	fmt.Println("║                                        ║")
+	fmt.Println("║       Appuyez sur P pour ouvrir        ║")
+	fmt.Println("║              le menu                   ║")
+	fmt.Println("║                                        ║")
+	fmt.Println("╚════════════════════════════════════════╝")
 
 	for {
-		b, err := text.Stdin.ReadByte()
+		var key [1]byte
+		_, err := os.Stdin.Read(key[:])
 		if err != nil {
 			return
 		}
 
-		if b == 'p' || b == 'P' {
+		if key[0] == 'p' || key[0] == 'P' {
 			term.Restore(int(os.Stdin.Fd()), oldState)
 
 			utils.ClearTerminal()
@@ -44,7 +51,12 @@ func DetecP(p *characters.Character) {
 			}
 
 			fmt.Println()
-			fmt.Println("Appuyez sur P pour ouvrir le menu.")
+			fmt.Println("╔════════════════════════════════════════╗")
+			fmt.Println("║                                        ║")
+			fmt.Println("║       Appuyez sur P pour ouvrir        ║")
+			fmt.Println("║              le menu                   ║")
+			fmt.Println("║                                        ║")
+			fmt.Println("╚════════════════════════════════════════╝")
 		}
 	}
 }
@@ -54,15 +66,22 @@ func menu(p *characters.Character) {
 
 	utils.ClearTerminal()
 
-	fmt.Println("========== MENU ==========")
-	fmt.Println("1. Afficher les informations")
-	fmt.Println("2. Inventaire")
-	fmt.Println("3. Marchand")
-	fmt.Println("4. forgeron")
-	fmt.Println("5. Camp d'entrainement")
-	fmt.Println("6. Exploration")
-	fmt.Println("7. Quitter le jeux")
-	fmt.Print("Votre choix : ")
+	fmt.Println("╔════════════════════════════════════════╗")
+	fmt.Println("║                                        ║")
+	fmt.Println("║                M E N U                 ║")
+	fmt.Println("║                                        ║")
+	fmt.Println("╠════════════════════════════════════════╣")
+	fmt.Println("║                                        ║")
+	fmt.Println("║  1. Afficher les informations          ║")
+	fmt.Println("║  2. Inventaire                         ║")
+	fmt.Println("║  3. Marchand                           ║")
+	fmt.Println("║  4. Forgeron                           ║")
+	fmt.Println("║  5. Camp d'entrainement                ║")
+	fmt.Println("║  6. Exploration                        ║")
+	fmt.Println("║  7. Quitter le jeux                    ║")
+	fmt.Println("║                                        ║")
+	fmt.Println("╚════════════════════════════════════════╝")
+	fmt.Print("\nVotre choix : ")
 
 	os.Stdin.Read(choice[:])
 
@@ -79,7 +98,7 @@ func menu(p *characters.Character) {
 		merchant.Merchant(p)
 
 	case '4':
-		npc.Blacksmith(p)
+		blacksmith.Blacksmith(p)
 
 	case '5':
 		combat.TrainingFight(p)

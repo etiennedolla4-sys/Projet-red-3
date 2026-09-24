@@ -2,12 +2,13 @@ package combat
 
 import (
 	"Projet-red-3/characters"
+	"Projet-red-3/inventory"
 	"fmt"
 	"math/rand"
 	"os"
 )
 
-func StartCombat(player *characters.Character, enemy *Enemy) {
+func StartCombat(player *characters.Character, enemy *Enemy) bool {
 	fmt.Println("\n==============================")
 	fmt.Println("          COMBAT")
 	fmt.Println("==============================")
@@ -18,6 +19,7 @@ func StartCombat(player *characters.Character, enemy *Enemy) {
 	enemyInitiative := enemy.Initiative + rand.Intn(10)
 
 	playerTurn := playerInitiative >= enemyInitiative
+	defending := false
 
 	if playerTurn {
 		fmt.Println("\n⚡ Vous commencez le combat !")
@@ -29,14 +31,20 @@ func StartCombat(player *characters.Character, enemy *Enemy) {
 		DisplayCombat(player, enemy)
 
 		if playerTurn {
-			fuite := PlayerTurn(player, enemy)
+			fuite, isDefending := PlayerTurn(player, enemy)
+			defending = isDefending
 
 			if fuite {
 				fmt.Println("\n🏃 Vous avez fui le combat.")
-				return
+				return false
 			}
 		} else {
-			EnemyTurn(player, enemy)
+			EnemyTurn(player, enemy, defending)
+			defending = false
+		}
+
+		if player.HP <= 0 {
+			inventory.TryRevive(player)
 		}
 
 		if player.HP <= 0 || enemy.HP <= 0 {
@@ -47,6 +55,7 @@ func StartCombat(player *characters.Character, enemy *Enemy) {
 	}
 
 	EndCombat(player, enemy)
+	return enemy.HP <= 0
 }
 
 func HealthBar(hp int, maxHP int) string {
@@ -106,37 +115,36 @@ func DisplayCombat(player *characters.Character, enemy *Enemy) {
 	fmt.Println("╚══════════════════════════════════════╝")
 }
 
-func PlayerTurn(player *characters.Character, enemy *Enemy) bool {
-	var choice int
+func PlayerTurn(player *characters.Character, enemy *Enemy) (bool, bool) {
+	for {
+		var choice int
 
-	fmt.Println("\nQue voulez-vous faire ?")
-	fmt.Println("1. Attaquer")
-	fmt.Println("2. Compétence")
-	fmt.Println("3. Défendre")
-	fmt.Println("4. Fuir")
-	fmt.Print("> ")
+		fmt.Println("\nQue voulez-vous faire ?")
+		fmt.Println("1. Attaquer")
+		fmt.Println("2. Compétence")
+		fmt.Println("3. Défendre")
+		fmt.Println("4. Fuir")
+		fmt.Print("> ")
 
-	fmt.Scan(&choice)
+		fmt.Scan(&choice)
 
-	switch choice {
-	case 1:
-		Attack(player, enemy)
-
-	case 2:
-		UseSkill(player, enemy)
-
-	case 3:
-		Defend(player)
-
-	case 4:
-		fmt.Println("\n🏃 Vous prenez la fuite !")
-		return true
-
-	default:
-		fmt.Println("\nChoix invalide.")
+		switch choice {
+		case 1:
+			Attack(player, enemy)
+			return false, false
+		case 2:
+			UseSkill(player, enemy)
+			return false, false
+		case 3:
+			Defend(player)
+			return false, true
+		case 4:
+			fmt.Println("\n🏃 Vous prenez la fuite !")
+			return true, false
+		default:
+			fmt.Println("\nChoix invalide.")
+		}
 	}
-
-	return false
 }
 
 func Attack(player *characters.Character, enemy *Enemy) {
@@ -177,8 +185,11 @@ func UseSkill(player *characters.Character, enemy *Enemy) {
 	}
 }
 
-func EnemyTurn(player *characters.Character, enemy *Enemy) {
+func EnemyTurn(player *characters.Character, enemy *Enemy, defending bool) {
 	damage := enemy.Attack - player.BaseDefense
+	if defending {
+		damage /= 2
+	}
 
 	if damage < 1 {
 		damage = 1
