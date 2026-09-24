@@ -1,6 +1,7 @@
 package text
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"time"
@@ -8,37 +9,49 @@ import (
 	"golang.org/x/term"
 )
 
+var Stdin = bufio.NewReader(os.Stdin)
+
 func PrintSlow(message string) {
 	oldState, err := term.MakeRaw(int(os.Stdin.Fd()))
 	if err != nil {
 		return
 	}
-	defer term.Restore(int(os.Stdin.Fd()), oldState)
 
-	skip := make(chan bool)
+	skip := make(chan bool, 1)
+	done := make(chan struct{})
 
 	go func() {
-		var key [1]byte
-
+		defer close(done)
 		for {
-			os.Stdin.Read(key[:])
-
-			if key[0] == ' ' {
+			b, err := Stdin.ReadByte()
+			if err != nil {
+				return
+			}
+			if b == ' ' {
 				skip <- true
 				return
 			}
 		}
 	}()
 
+	stop := func() {
+		term.Restore(int(os.Stdin.Fd()), oldState)
+	}
+
 	for i, lettre := range message {
 		select {
 		case <-skip:
 			fmt.Print(message[i:])
+			stop()
 			return
-
 		default:
 			fmt.Print(string(lettre))
 			time.Sleep(50 * time.Millisecond)
 		}
+	}
+	stop()
+	select {
+	case <-skip:
+	case <-done:
 	}
 }

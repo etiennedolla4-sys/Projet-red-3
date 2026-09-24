@@ -16,7 +16,7 @@ func StartMenu() {
 	switch choice {
 	case 1:
 		p := game.Init()
-		DetecP(p)
+		DetecP(&p)
 	case 2:
 		fmt.Println("Ciao")
 		os.Exit(0)
