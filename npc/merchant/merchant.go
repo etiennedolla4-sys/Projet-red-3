@@ -4,9 +4,19 @@ import (
 	"fmt"
 
 	"Projet-red-3/characters"
+	"Projet-red-3/item"
+	"Projet-red-3/ui/text"
 )
 
 func Merchant(p *characters.Character) {
+	var merchantFirstTime = true
+	message := fmt.Sprintf(
+		"En poussant la porte, une petite cloche résonne dans la boutique. Des fioles, des livres et des morceaux de créatures sont entassés sur des étagères poussiéreuses. Derrière le comptoir, un marchand te fixe quelques secondes avant de sourire.\n%s :« Bienvenue, aventurier. Ici, tout a une valeur : potions, objets, matériaux… et parfois des choses que tu ferais mieux de ne pas toucher. Si tu trouves quelque chose d'intéressant dans Veyr, ramène-le-moi. Je pourrais être généreux. »",
+		text.Color("Armando", "31"))
+	if merchantFirstTime {
+		text.PrintSlow(message)
+		merchantFirstTime = false
+	}
 	fmt.Println("\n=== MARCHAND ===")
 	fmt.Println("Gold :", p.Gold)
 	fmt.Println("1. Potion de vie - 3 Gold")
@@ -22,37 +32,37 @@ func Merchant(p *characters.Character) {
 	var choice int
 	fmt.Scan(&choice)
 
-	var object string
+	var object item.Item
 	var price int
 
 	switch choice {
 	case 1:
-		object = "Potion de vie"
-		price = 3
+		object = item.NewHealthPotion()
+		price = 20
 
 	case 2:
-		object = "Potion de poison"
-		price = 6
+		object = item.NewPoisonPotion()
+		price = 30
 
 	case 3:
-		object = "Livre de Sort : Boule de Feu"
+		object = item.NewFireballBook()
 		price = 25
 
 	case 4:
-		object = "Fourrure de Loup"
+		object = item.NewWolfFur()
 		price = 4
 
 	case 5:
-		object = "Peau de Troll"
+		object = item.NewTrollSkin()
 		price = 7
 
 	case 6:
-		object = "Cuir de Sanglier"
-		price = 3
+		object = item.NewBoarLeather()
+		price = 10
 
 	case 7:
-		object = "Plume de Corbeau"
-		price = 1
+		object = item.NewCrowFeather()
+		price = 10
 
 	case 0:
 		return

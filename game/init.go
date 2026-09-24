@@ -21,9 +21,14 @@ func Init() characters.Character {
 
 		valide := true
 
+		if name == "" {
+			valide = false
+		}
+
 		for _, lettre := range name {
 			if !unicode.IsLetter(lettre) {
 				valide = false
+				break
 			}
 		}
 
@@ -36,7 +41,7 @@ func Init() characters.Character {
 
 	name = strings.ToUpper(name[:1]) + strings.ToLower(name[1:])
 
-	fmt.Println("Choisissez votre classe :")
+	fmt.Println("Choisissez votre classe ")
 	fmt.Println("1. Gobelin")
 	fmt.Println("2. Vampire")
 	fmt.Scan(&classe)

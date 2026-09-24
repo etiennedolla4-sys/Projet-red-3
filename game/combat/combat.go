@@ -14,7 +14,7 @@ func StartCombat(player *characters.Character, enemy *enemy.Monster) {
 
 	fmt.Printf("\n%s VS %s\n", player.Name, enemy.Name)
 
-	// Détermine qui commence
+	// determine qui commence
 	playerInitiative := player.Initiative + rand.Intn(10)
 	enemyInitiative := enemy.Initiative + rand.Intn(10)
 
@@ -41,23 +41,41 @@ func StartCombat(player *characters.Character, enemy *enemy.Monster) {
 
 	EndCombat(player, enemy)
 }
+func HealthBar(hp int, maxHP int) string {
+	const size = 20
 
+	ratio := float64(hp) / float64(maxHP)
+	filled := int(ratio * size)
+
+	bar := ""
+
+	for i := 0; i < size; i++ {
+		if i < filled {
+			bar += "█"
+		} else {
+			bar += "░"
+		}
+	}
+
+	return "[" + bar + "]"
+}
 func DisplayCombat(player *characters.Character, enemy *enemy.Monster) {
-	fmt.Println("\n------------------------------")
+	fmt.Println()
+	fmt.Println("╔══════════════════════════════════════╗")
+	fmt.Println("║                COMBAT                ║")
+	fmt.Println("╠══════════════════════════════════════╣")
 
-	fmt.Printf("%s : %d/%d PV\n",
-		player.Name,
-		player.HP,
-		player.MaxHP,
-	)
+	fmt.Printf("║  %-34s║\n", player.Name)
+	fmt.Printf("║  PV : %3d / %-3d                    ║\n", player.HP, player.MaxHP)
+	fmt.Printf("║  %s ║\n", HealthBar(player.HP, player.MaxHP))
 
-	fmt.Printf("%s : %d/%d PV\n",
-		enemy.Name,
-		enemy.HP,
-		enemy.MaxHP,
-	)
+	fmt.Println("║                                      ║")
 
-	fmt.Println("------------------------------")
+	fmt.Printf("║  %-34s║\n", enemy.Name)
+	fmt.Printf("║  PV : %3d / %-3d                    ║\n", enemy.HP, enemy.MaxHP)
+	fmt.Printf("║  %s ║\n", HealthBar(enemy.HP, enemy.MaxHP))
+
+	fmt.Println("╚══════════════════════════════════════╝")
 }
 
 func PlayerTurn(player *characters.Character, enemy *enemy.Monster) {
