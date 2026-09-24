@@ -195,6 +195,7 @@ func HandleTile(
 
 	case "T":
 		fmt.Println()
+		ShowChestLore()
 		fmt.Println("========== TRÉSOR ==========")
 
 		FindChest(character)
@@ -202,6 +203,7 @@ func HandleTile(
 
 	case "+":
 		fmt.Println()
+		ShowRestLore()
 		fmt.Println("========== REPOS ==========")
 
 		FindRest(character)

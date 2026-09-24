@@ -3,6 +3,7 @@ package combat
 import (
 	"Projet-red-3/characters"
 	"Projet-red-3/inventory"
+	"Projet-red-3/ui/text"
 	"Projet-red-3/utils"
 	"fmt"
 	"math/rand"
@@ -246,6 +247,21 @@ func UseSkill(player *characters.Character, enemy *Enemy) {
 		}
 	}
 }
+func ShowEnemyLore(enemyName string) {
+	switch enemyName {
+	case "Slime":
+		text.PrintSlow("Le slime tremble encore quelques secondes avant de se dissoudre.\n")
+
+	case "Petit Gobelin":
+		text.PrintSlow("Le petit gobelin serre une vieille pièce contre lui avant de tomber.\n")
+
+	case "Gobelin des ruines":
+		text.PrintSlow("Son équipement porte les mêmes symboles que ceux gravés sur les ruines.\n")
+
+	case "Golem des cavernes":
+		text.PrintSlow("Les pierres qui composent son corps cessent lentement de vibrer.\n")
+	}
+}
 func EnemyTurn(player *characters.Character, enemy *Enemy, defending bool) {
 	damage := enemy.Attack - player.BaseDefense
 	if defending {
@@ -273,6 +289,7 @@ func EndCombat(player *characters.Character, enemy *Enemy) {
 		fmt.Println("💀 Vous avez été vaincu...")
 		os.Exit(0)
 	} else if enemy.HP <= 0 {
+		ShowEnemyLore(enemy.Name)
 		fmt.Printf("🏆 Vous avez vaincu %s !\n", enemy.Name)
 
 		player.Gold += 20

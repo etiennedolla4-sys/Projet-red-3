@@ -57,7 +57,7 @@ func FindChest(character *characters.Character) {
 
 func FindRest(character *characters.Character) {
 	heal := 20
-
+	ShowRestLore()
 	character.HP += heal
 
 	if character.HP > character.MaxHP {

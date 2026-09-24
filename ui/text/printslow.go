@@ -8,6 +8,6 @@ import (
 func PrintSlow(message string) {
 	for _, lettre := range message {
 		fmt.Print(string(lettre))
-		time.Sleep(10 * time.Millisecond)
+		time.Sleep(30 * time.Millisecond)
 	}
 }
