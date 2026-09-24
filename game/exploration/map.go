@@ -3,15 +3,53 @@ package game
 import "fmt"
 
 type Map struct {
-	Width  int
-	Height int
+	Width   int
+	Height  int
+	Cleared map[string]bool
 }
 
 func NewMap(width, height int) Map {
 	return Map{
-		Width:  width,
-		Height: height,
+		Width:   width,
+		Height:  height,
+		Cleared: make(map[string]bool),
 	}
+}
+
+func (m Map) tileKey(x, y, depth int) string {
+	return fmt.Sprintf("%d:%d:%d", depth, x, y)
+}
+
+func (m Map) MarkCleared(x, y, depth int) {
+	m.Cleared[m.tileKey(x, y, depth)] = true
+}
+
+func (m Map) RemainingEnemies(depth int) int {
+	count := 0
+
+	for y := 0; y < m.Height; y++ {
+		for x := 0; x < m.Width; x++ {
+			if m.baseTile(x, y, depth) == "E" && !m.Cleared[m.tileKey(x, y, depth)] {
+				count++
+			}
+		}
+	}
+
+	return count
+}
+
+func (m Map) DefeatedEnemies(depth int) int {
+	count := 0
+
+	for y := 0; y < m.Height; y++ {
+		for x := 0; x < m.Width; x++ {
+			if m.baseTile(x, y, depth) == "E" && m.Cleared[m.tileKey(x, y, depth)] {
+				count++
+			}
+		}
+	}
+
+	return count
 }
 
 func (m Map) IsInside(x, y int) bool {
@@ -67,6 +105,14 @@ func (m Map) Display(playerX, playerY, depth int) {
 }
 
 func (m Map) Tile(x, y, depth int) string {
+	if m.Cleared[m.tileKey(x, y, depth)] {
+		return "."
+	}
+
+	return m.baseTile(x, y, depth)
+}
+
+func (m Map) baseTile(x, y, depth int) string {
 	switch depth {
 	case 1:
 		return surfaceTile(x, y)

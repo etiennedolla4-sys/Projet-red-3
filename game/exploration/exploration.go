@@ -2,19 +2,25 @@ package game
 
 import (
 	"Projet-red-3/characters"
+	"Projet-red-3/inventory"
 	"Projet-red-3/utils"
 	"fmt"
 )
 
-func Start(character *characters.Character) {
-	currentLayer := 1
-	x := 3
-	y := 3
+var gameMap = NewMap(7, 7)
+var currentLayer = 1
+var playerX = 3
+var playerY = 3
 
-	gameMap := NewMap(7, 7)
+func Start(character *characters.Character) {
+	utils.ClearTerminal()
 
 	for {
 		if character.HP <= 0 {
+			if inventory.TryRevive(character) {
+				continue
+			}
+
 			utils.ClearTerminal()
 
 			fmt.Println()
@@ -23,8 +29,6 @@ func Start(character *characters.Character) {
 
 			return
 		}
-
-		utils.ClearTerminal()
 
 		layer := GetLayer(currentLayer)
 
@@ -35,7 +39,7 @@ func Start(character *characters.Character) {
 		fmt.Printf("Couche : %d - %s\n", layer.Depth, layer.Name)
 		fmt.Println(layer.Description)
 
-		gameMap.Display(x, y, currentLayer)
+		gameMap.Display(playerX, playerY, currentLayer)
 
 		fmt.Println()
 		fmt.Printf("PV : %d / %d\n", character.HP, character.MaxHP)
@@ -56,19 +60,31 @@ func Start(character *characters.Character) {
 			Move(
 				character,
 				gameMap,
-				&x,
-				&y,
+				&playerX,
+				&playerY,
 				currentLayer,
 			)
 
 		case 2:
-			Observe(layer, x, y)
+			Observe(layer, playerX, playerY)
 
 		case 3:
 			if currentLayer < 5 {
+				defeated := gameMap.DefeatedEnemies(currentLayer)
+				remaining := gameMap.RemainingEnemies(currentLayer)
+
+				if defeated < 2 || remaining > 0 {
+					fmt.Println()
+					fmt.Println("Vous ne pouvez pas encore descendre.")
+					fmt.Printf("Ennemis éliminés : %d\n", defeated)
+					fmt.Printf("Ennemis restants : %d\n", remaining)
+					fmt.Println("Vous devez éliminer au moins 2 ennemis et ne laisser aucun ennemi sur cette couche.")
+					break
+				}
+
 				currentLayer++
 
-				x, y = findStartPosition(
+				playerX, playerY = findStartPosition(
 					gameMap,
 					currentLayer,
 				)
@@ -173,19 +189,23 @@ func HandleTile(
 		fmt.Println("========== ENNEMI ==========")
 		fmt.Println("Un ennemi vous bloque le passage !")
 
-		StartEncounter(character, depth)
+		if StartEncounter(character, depth) {
+			gameMap.MarkCleared(x, y, depth)
+		}
 
 	case "T":
 		fmt.Println()
 		fmt.Println("========== TRÉSOR ==========")
 
 		FindChest(character)
+		gameMap.MarkCleared(x, y, depth)
 
 	case "+":
 		fmt.Println()
 		fmt.Println("========== REPOS ==========")
 
 		FindRest(character)
+		gameMap.MarkCleared(x, y, depth)
 
 	default:
 		fmt.Println()

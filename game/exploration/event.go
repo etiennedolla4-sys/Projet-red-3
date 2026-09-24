@@ -25,14 +25,14 @@ func RandomEvent(character *characters.Character, depth int) {
 	}
 }
 
-func StartEncounter(character *characters.Character, depth int) {
+func StartEncounter(character *characters.Character, depth int) bool {
 	enemy := combat.GetRandomEnemy(depth)
 
 	fmt.Println()
 	fmt.Println("========== RENCONTRE ==========")
 	fmt.Printf("Un %s apparaît dans les profondeurs !\n", enemy.Name)
 
-	combat.StartCombat(character, &enemy)
+	return combat.StartCombat(character, &enemy)
 }
 
 func FindResource(character *characters.Character) {
