@@ -2,7 +2,7 @@ package menu
 
 import (
 	"Projet-red-3/characters"
-	"Projet-red-3/npc"
+	npc "Projet-red-3/npc/merchant"
 	"Projet-red-3/ui/showinfo"
 	"fmt"
 	"os"
@@ -29,31 +29,33 @@ func DetecP(p characters.Character) {
 		term.Restore(int(os.Stdin.Fd()), oldState)
 
 		if touche[0] == 'p' || touche[0] == 'P' {
-			menu(p)
+			menu(&p)
 			fmt.Println("\nAppuyez sur P pour ouvrir le menu.")
 		}
 	}
 }
 
-func menu(p characters.Character) {
+func menu(p *characters.Character) {
 	var choix [1]byte
 
+	fmt.Println("\n=== MENU ===")
 	fmt.Println("1. Afficher les informations du personnage")
 	fmt.Println("2. Accéder au contenu de l'inventaire")
 	fmt.Println("3. Marchand")
 	fmt.Println("4. Quitter")
+	fmt.Print("Votre choix : ")
 
 	os.Stdin.Read(choix[:])
 
 	switch choix[0] {
 	case '1':
-		showinfo.DisplayInfo(p)
+		showinfo.DisplayInfo(*p)
 
 	case '2':
 		showinfo.DisplayInventory(p)
 
 	case '3':
-		npc.Merchant(&p)
+		npc.Merchant(p)
 
 	case '4':
 		fmt.Println("Au revoir !")
