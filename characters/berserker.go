@@ -14,7 +14,7 @@ func NewBerserker(name string) Berserker {
 			Class:        "Berserker",
 			Description:  "Le Berserker est un combattant puissant qui privilégie la force brute et les attaques dévastatrices.",
 			HP:           55,
-			MP:           0,
+			MP:           60,
 			BaseAttack:   15,
 			BaseDefense:  10,
 			Initiative:   6,

@@ -21,7 +21,7 @@ Chaque classe possède une mécanique de gameplay différente afin de rendre les
 
 ### Écran d'accueil
 
-> ![alt text](image.png)
+> ![alt text](screenshots/)
 
 ### Création du personnage
 
@@ -37,7 +37,12 @@ Chaque classe possède une mécanique de gameplay différente afin de rendre les
 
 ---
 
-## 3. Fonctionnalités (Features)
+## 📌 Gestion du projet
+
+Le suivi des tâches, des fonctionnalités et de l'avancement du projet est réalisé avec Trello.
+
+([Voir le Trello du projet](https://trello.com/b/eK0VV6zm))
+## 4. Fonctionnalités (Features)
 
 ### Système de personnage
 

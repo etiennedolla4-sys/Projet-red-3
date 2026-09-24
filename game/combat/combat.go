@@ -3,6 +3,7 @@ package combat
 import (
 	"Projet-red-3/characters"
 	"Projet-red-3/inventory"
+	"Projet-red-3/utils"
 	"fmt"
 	"math/rand"
 	"os"
@@ -92,27 +93,29 @@ func HealthBar(hp int, maxHP int) string {
 func DisplayCombat(player *characters.Character, enemy *Enemy) {
 	fmt.Println()
 
+	fmt.Println()
+
 	fmt.Println("╔══════════════════════════════════════╗")
 	fmt.Println("║                COMBAT                ║")
 	fmt.Println("╠══════════════════════════════════════╣")
 
-	fmt.Printf("║  %-34s║\n", player.Name)
+	fmt.Printf("║  %-34s  ║\n", player.Name)
 	fmt.Printf("║  PV : %3d / %-3d                      ║\n",
 		player.HP,
 		player.MaxHP,
 	)
-	fmt.Printf("║  %s ║\n", HealthBar(player.HP, player.MaxHP))
+	fmt.Printf("║  %-34s  ║\n", HealthBar(player.HP, player.MaxHP))
 
 	fmt.Println("║                                      ║")
 
-	fmt.Printf("║  %-34s║\n", enemy.Name)
+	fmt.Printf("║  %-34s  ║\n", enemy.Name)
 	fmt.Printf("║  PV : %3d / %-3d                      ║\n",
 		enemy.HP,
 		enemy.MaxHP,
 	)
-	fmt.Printf("║  %s ║\n", HealthBar(enemy.HP, enemy.MaxHP))
+	fmt.Printf("║  %-34s  ║\n", HealthBar(enemy.HP, enemy.MaxHP))
 
-	fmt.Println("╚════════════════════════════════════════╝")
+	fmt.Println("╚══════════════════════════════════════╝")
 }
 
 func PlayerTurn(player *characters.Character, enemy *Enemy) (bool, bool) {
@@ -127,6 +130,7 @@ func PlayerTurn(player *characters.Character, enemy *Enemy) (bool, bool) {
 		fmt.Print("> ")
 
 		fmt.Scan(&choice)
+		utils.ClearTerminal()
 
 		switch choice {
 		case 1:
@@ -168,7 +172,15 @@ func Defend(player *characters.Character) {
 	fmt.Println("\n🛡 Vous vous mettez en défense !")
 	fmt.Println("Votre défense est renforcée pour ce tour.")
 }
+func UseMana(player *characters.Character, cost int) bool {
+	if player.MP < cost {
+		fmt.Printf("\nVous n'avez pas assez de mana. %d mana nécessaire.\n", cost)
+		return false
+	}
 
+	player.MP -= cost
+	return true
+}
 func UseSkill(player *characters.Character, enemy *Enemy) {
 	var choice int
 
