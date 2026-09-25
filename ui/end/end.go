@@ -25,7 +25,7 @@ func DisplayEndScreen() {
 	fmt.Println("║                                                            ║")
 	fmt.Println("╠════════════════════════════════════════════════════════════╣")
 	fmt.Println("║                                                            ║")
-	fmt.Println("║                 ★ FIN DE L'AVENTURE ★                     ║")
+	fmt.Println("║                 ★ FIN DE L'AVENTURE ★                      ║")
 	fmt.Println("║                                                            ║")
 	fmt.Println("║              Vous avez atteint la fin                      ║")
 	fmt.Println("║                 de votre exploration.                      ║")

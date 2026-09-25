@@ -21,16 +21,13 @@ func Merchant(p *characters.Character) {
 	}
 
 	for {
-		fmt.Println("\n=== MARCHAND ===")
-		fmt.Println("Gold :", p.Gold)
 		fmt.Println("1. Potion de vie - 20 Gold")
-		fmt.Println("2. Potion de poison - 30 Gold")
-		fmt.Println("3. Livre de Sort : Boule de Feu - 25 Gold")
-		fmt.Println("4. Fourrure de Loup - 4 Gold")
-		fmt.Println("5. Peau de Troll - 7 Gold")
-		fmt.Println("6. Cuir de Sanglier - 10 Gold")
-		fmt.Println("7. Plume de Corbeau - 10 Gold")
-		fmt.Println("8. Potion de réanimation - 60 Gold")
+		fmt.Println("2. Potion de mana - 25 Gold")
+		fmt.Println("3. Fourrure de Loup - 4 Gold")
+		fmt.Println("4. Peau de Troll - 7 Gold")
+		fmt.Println("5. Cuir de Sanglier - 10 Gold")
+		fmt.Println("6. Plume de Corbeau - 10 Gold")
+		fmt.Println("7. Sac d'aventurier - 50 Gold (+10 inventaire)")
 		fmt.Println("0. Retour")
 		fmt.Print("Votre choix : ")
 
@@ -46,52 +43,53 @@ func Merchant(p *characters.Character) {
 		case 1:
 			object = item.NewHealthPotion()
 			price = 20
+
 		case 2:
-			object = item.NewPoisonPotion()
-			price = 30
-		case 3:
-			object = item.NewFireballBook()
+			object = item.NewManaPotion()
 			price = 25
-		case 4:
+
+		case 3:
 			object = item.NewWolfFur()
 			price = 4
-		case 5:
+
+		case 4:
 			object = item.NewTrollSkin()
 			price = 7
-		case 6:
+
+		case 5:
 			object = item.NewBoarLeather()
 			price = 10
-		case 7:
+
+		case 6:
 			object = item.NewCrowFeather()
 			price = 10
-		case 8:
-			if p.Revived {
-				fmt.Println("Vous avez déjà utilisé une réanimation pendant cette partie.")
+		case 7:
+			if p.HasBag {
+				fmt.Println("Vous possédez déjà un Sac d'aventurier.")
 				continue
 			}
 
-			hasRevivalPotion := false
-			for _, inventoryItem := range p.Inventory {
-				if inventoryItem.Name() == "Potion de réanimation" {
-					hasRevivalPotion = true
-					break
-				}
-			}
+			price := 50
 
-			if hasRevivalPotion {
-				fmt.Println("Vous avez déjà une Potion de réanimation.")
+			if p.Gold < price {
+				fmt.Println("Vous n'avez pas assez de Gold.")
 				continue
 			}
 
-			object = item.NewRevivalPotion()
-			price = 60
+			p.Gold -= price
+			p.MaxInventory += 10
+			p.HasBag = true
+
+			fmt.Println("\nVous achetez un Sac d'aventurier !")
+			fmt.Println("Votre capacité d'inventaire augmente de 10.")
+			fmt.Printf("Capacité : %d objets maximum\n", p.MaxInventory)
 		case 0:
 			return
+
 		default:
 			fmt.Println("Choix invalide.")
 			continue
 		}
-
 		if p.Gold < price {
 			fmt.Println("Vous n'avez pas assez de Gold !")
 			continue

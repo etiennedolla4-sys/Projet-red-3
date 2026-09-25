@@ -19,6 +19,7 @@ type Character struct {
 	Initiative   int
 	Inventory    []item.Item
 	MaxInventory int
+	HasBag       bool
 	MaxHP        int
 	MaxMP        int
 	Crit         int

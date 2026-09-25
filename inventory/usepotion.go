@@ -27,6 +27,32 @@ func UseHealthPotion(character *characters.Character, index int) bool {
 
 	return true
 }
+func UseManaPotion(character *characters.Character, index int) bool {
+	if index < 0 || index >= len(character.Inventory) {
+		return false
+	}
+
+	object := character.Inventory[index]
+
+	if object.Name() != "Potion de mana" {
+		return false
+	}
+
+	if character.MP >= character.MaxMP {
+		fmt.Println("Votre mana est déjà au maximum.")
+		return false
+	}
+
+	character.MP += 30
+
+	if character.MP > character.MaxMP {
+		character.MP = character.MaxMP
+	}
+
+	removeItem(character, index)
+
+	return true
+}
 
 func UsePoisonPotion(character *characters.Character, index int) bool {
 	if index < 0 || index >= len(character.Inventory) {

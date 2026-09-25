@@ -21,23 +21,28 @@ Chaque classe possède une mécanique de gameplay différente afin de rendre les
 
 ### Écran d'accueil
 
-> Ajouter ici une capture d'écran du menu principal.
+> ![alt text](screenshots/Title.png)
 
 ### Création du personnage
 
-> Ajouter ici une capture d'écran de la sélection du nom et de la classe.
+> ![alt text](screenshots/class.png)
 
 ### Combat
 
-> Ajouter ici une capture d'écran d'un combat avec les barres de PV.
+> ![alt text](screenshots/combat.png)
 
-### Inventaire / Marchand
+### Marchand
 
-> Ajouter ici une capture d'écran de l'inventaire ou du marchand.
+> ![alt text](screenshots/merchant.png)
 
 ---
 
-## 3. Fonctionnalités (Features)
+## 3.Gestion du projet
+
+Le suivi des tâches, des fonctionnalités et de l'avancement du projet est réalisé avec Trello.
+
+([Voir le Trello du projet](https://trello.com/b/eK0VV6zm))
+## 4. Fonctionnalités (Features)
 
 ### Système de personnage
 
@@ -293,14 +298,12 @@ Projet-red-3/
 
 ### Gestion du projet
 
-* Git
+* Git 2.53.0
 * GitHub
 
 ### Licence
 
 Projet réalisé dans le cadre du Projet Red à Ynov Campus Val d'europe.
-
-Tous les droits sur le code sont réservés aux auteurs du projet, sauf indication contraire.
 
 ---
 

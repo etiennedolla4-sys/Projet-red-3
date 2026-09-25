@@ -8,6 +8,7 @@ import (
 func TrainingFight(player *characters.Character) {
 	monster := NewSlime()
 	startingHP := player.HP
+	startingMP := player.MP
 
 	fmt.Println("\n==============================")
 	fmt.Println("     CAMP D'ENTRAÎNEMENT")
@@ -50,5 +51,6 @@ func TrainingFight(player *characters.Character) {
 	}
 
 	player.HP = startingHP
+	player.MP = startingMP
 	fmt.Printf("Vos PV reviennent à %d / %d.\n", player.HP, player.MaxHP)
 }

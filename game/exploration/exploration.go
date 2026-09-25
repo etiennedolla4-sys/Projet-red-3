@@ -194,16 +194,10 @@ func HandleTile(
 		}
 
 	case "T":
-		fmt.Println()
-		fmt.Println("========== TRÉSOR ==========")
-
 		FindChest(character)
 		gameMap.MarkCleared(x, y, depth)
 
 	case "+":
-		fmt.Println()
-		fmt.Println("========== REPOS ==========")
-
 		FindRest(character)
 		gameMap.MarkCleared(x, y, depth)
 

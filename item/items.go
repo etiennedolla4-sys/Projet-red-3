@@ -31,13 +31,6 @@ func NewRevivalPotion() Potion {
 		ItemType:        "Potion",
 	}
 }
-func NewFireballBook() SpellBook {
-	return SpellBook{
-		ItemName:        "Livre de Sort : Boule de Feu",
-		ItemDescription: "Un livre contenant le sort Boule de Feu.",
-		ItemType:        "Livre de Sort",
-	}
-}
 
 func NewWolfFur() Material {
 	return Material{

@@ -53,6 +53,11 @@ func DisplayInventory(p *characters.Character) {
 
 		case "Potion de poison":
 			inventory.UsePoisonPotion(p, index)
+		case "Potion de mana":
+			if inventory.UseManaPotion(p, index) {
+				fmt.Println("\n💙 Vous utilisez une Potion de mana.")
+				fmt.Printf("Mana : %d / %d\n", p.MP, p.MaxMP)
+			}
 
 		default:
 			fmt.Println()

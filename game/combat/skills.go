@@ -6,14 +6,19 @@ import (
 	"math/rand"
 )
 
-func GobelinSkill(player *characters.Character, enemy *Enemy) {
+func GobelinSkill(player *characters.Character, enemy *Enemy) bool {
+	if !UseMana(player, 25) {
+		return false
+	}
+
 	fmt.Println("\n🪙 Vous lancez la pièce...")
 
 	result := rand.Intn(2)
 
 	if result == 0 {
 		fmt.Println("PILE !")
-		fmt.Println("💀 Coup mortel !")
+		fmt.Println("💀 Coup Critique !")
+
 		enemy.HP /= 2
 	} else {
 		fmt.Println("FACE !")
@@ -28,8 +33,15 @@ func GobelinSkill(player *characters.Character, enemy *Enemy) {
 		fmt.Println("Vous perdez la moitié de vos PV.")
 		fmt.Printf("PV : %d / %d\n", player.HP, player.MaxHP)
 	}
+
+	return true
 }
-func GobelinCoupVicieux(player *characters.Character, enemy *Enemy) {
+
+func GobelinCoupVicieux(player *characters.Character, enemy *Enemy) bool {
+	if !UseMana(player, 30) {
+		return false
+	}
+
 	damage := player.BaseAttack + 10
 
 	if rand.Intn(100) < 30 {
@@ -43,10 +55,16 @@ func GobelinCoupVicieux(player *characters.Character, enemy *Enemy) {
 		enemy.HP = 0
 	}
 
-	fmt.Printf("🔪 Vous infligez %d dégâts.\n", damage)
+	fmt.Printf("Vous infligez %d dégâts.\n", damage)
+
+	return true
 }
 
-func GobelinDeTruque(player *characters.Character, enemy *Enemy) {
+func GobelinDeTruque(player *characters.Character, enemy *Enemy) bool {
+	if !UseMana(player, 30) {
+		return false
+	}
+
 	damage := rand.Intn(41) + 10
 
 	enemy.HP -= damage
@@ -57,9 +75,15 @@ func GobelinDeTruque(player *characters.Character, enemy *Enemy) {
 
 	fmt.Println("\n🎲 Vous lancez votre dé truqué...")
 	fmt.Printf("Le dé inflige %d dégâts !\n", damage)
+
+	return true
 }
 
-func VampireSkill(player *characters.Character, enemy *Enemy) {
+func VampireSkill(player *characters.Character, enemy *Enemy) bool {
+	if !UseMana(player, 40) {
+		return false
+	}
+
 	damage := 25
 
 	enemy.HP -= damage
@@ -80,9 +104,15 @@ func VampireSkill(player *characters.Character, enemy *Enemy) {
 	fmt.Printf("Vous infligez %d dégâts.\n", damage)
 	fmt.Printf("Vous récupérez %d PV.\n", heal)
 	fmt.Printf("PV : %d / %d\n", player.HP, player.MaxHP)
+
+	return true
 }
 
-func VampireMorsure(player *characters.Character, enemy *Enemy) {
+func VampireMorsure(player *characters.Character, enemy *Enemy) bool {
+	if !UseMana(player, 30) {
+		return false
+	}
+
 	damage := 35
 	heal := 10
 
@@ -100,18 +130,25 @@ func VampireMorsure(player *characters.Character, enemy *Enemy) {
 	fmt.Println("\n🧛 MORSURE !")
 	fmt.Printf("Vous infligez %d dégâts.\n", damage)
 	fmt.Printf("Vous récupérez %d PV.\n", heal)
+
+	return true
 }
 
-func VampireSacrifice(player *characters.Character, enemy *Enemy) {
-	cost := 15
+func VampireSacrifice(player *characters.Character, enemy *Enemy) bool {
+	costHP := 15
+	costMana := 35
 	damage := 50
 
-	if player.HP <= cost {
+	if player.HP <= costHP {
 		fmt.Println("\nVous n'avez pas assez de PV pour utiliser cette compétence.")
-		return
+		return false
 	}
 
-	player.HP -= cost
+	if !UseMana(player, costMana) {
+		return false
+	}
+
+	player.HP -= costHP
 	enemy.HP -= damage
 
 	if enemy.HP < 0 {
@@ -119,11 +156,17 @@ func VampireSacrifice(player *characters.Character, enemy *Enemy) {
 	}
 
 	fmt.Println("\n🩸 SACRIFICE SANGUIN !")
-	fmt.Printf("Vous perdez %d PV.\n", cost)
+	fmt.Printf("Vous perdez %d PV.\n", costHP)
 	fmt.Printf("Vous infligez %d dégâts.\n", damage)
+
+	return true
 }
 
-func BerserkerSkill(player *characters.Character, enemy *Enemy) {
+func BerserkerSkill(player *characters.Character, enemy *Enemy) bool {
+	if !UseMana(player, 25) {
+		return false
+	}
+
 	fmt.Println("\n💢 RAGE DU BERSERKER !")
 
 	damage := player.BaseAttack + 20
@@ -144,9 +187,15 @@ func BerserkerSkill(player *characters.Character, enemy *Enemy) {
 
 	fmt.Printf("💥 Vous infligez %d dégâts !\n", damage)
 	fmt.Printf("Vous perdez %d PV.\n", recoil)
+
+	return true
 }
 
-func BerserkerExecution(player *characters.Character, enemy *Enemy) {
+func BerserkerExecution(player *characters.Character, enemy *Enemy) bool {
+	if !UseMana(player, 30) {
+		return false
+	}
+
 	damage := player.BaseAttack + 10
 
 	if enemy.HP <= enemy.MaxHP/2 {
@@ -162,9 +211,15 @@ func BerserkerExecution(player *characters.Character, enemy *Enemy) {
 
 	fmt.Println("🪓 EXÉCUTION !")
 	fmt.Printf("Vous infligez %d dégâts.\n", damage)
+
+	return true
 }
 
-func BerserkerFrenesie(player *characters.Character, enemy *Enemy) {
+func BerserkerFrenesie(player *characters.Character, enemy *Enemy) bool {
+	if !UseMana(player, 35) {
+		return false
+	}
+
 	fmt.Println("\n🔥 FRÉNÉSIE !")
 
 	for i := 0; i < 2; i++ {
@@ -182,4 +237,6 @@ func BerserkerFrenesie(player *characters.Character, enemy *Enemy) {
 			break
 		}
 	}
+
+	return true
 }
