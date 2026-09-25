@@ -207,19 +207,31 @@ La configuration du jeu est directement définie dans le code.
 Projet-red-3/
 │
 ├── main.go
+├── go.mod
+├── go.sum
+├── README.md
 │
 ├── game/
-│   └── ...
+│   ├── init.go
+│   │
+│   ├── combat/
+│   │   ├── combat.go
+│   │   ├── enemies.go
+│   │   ├── progression.go
+│   │   ├── skills.go
+│   │   └── trainingfight.go
+│   │
+│   └── exploration/
+│       ├── effects.go
+│       ├── event.go
+│       ├── exploration.go
+│       ├── layer.go
+│       └── map.go
 │
 ├── characters/
 │   ├── character.go
 │   ├── gobelin.go
 │   └── vampire.go
-│
-├── combat/
-│   ├── combat.go
-│   ├── trainingfight.go
-│   └── skills.go
 │
 ├── enemy/
 │   ├── enemy.go
@@ -229,18 +241,35 @@ Projet-red-3/
 │   ├── item.go
 │   ├── items.go
 │   ├── potion.go
+│   ├── healthpotion.go
+│   ├── manapotion.go
+│   ├── poisonpotion.go
 │   ├── material.go
 │   └── spellbook.go
 │
 ├── npc/
-│   └── merchant.go
+│   ├── merchant.go
+│   └── blacksmith.go
 │
 ├── save/
-│   └── ...
+│   ├── save.go
+│   └── load.go
 │
 └── ui/
+    │
+    ├── menu/
+    │   ├── menu.go
+    │   ├── startmenu.go
+    │   └── pausemenu.go
+    │
     ├── showinfo/
+    │   ├── character.go
+    │   └── inventory.go
+    │
     └── text/
+        ├── banner.go
+        ├── messages.go
+        └── end.go
 ```
 
 ### Organisation des packages
