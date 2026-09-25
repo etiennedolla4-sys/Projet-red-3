@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"time"
 )
 
 func StartCombat(player *characters.Character, enemy *Enemy) bool {
@@ -30,6 +31,7 @@ func StartCombat(player *characters.Character, enemy *Enemy) bool {
 	}
 
 	for player.HP > 0 && enemy.HP > 0 {
+		utils.ClearTerminal()
 		DisplayCombat(player, enemy)
 
 		if playerTurn {
@@ -92,29 +94,26 @@ func HealthBar(hp int, maxHP int) string {
 }
 
 func DisplayCombat(player *characters.Character, enemy *Enemy) {
-	fmt.Println()
-
-	fmt.Println()
-
 	fmt.Println("╔══════════════════════════════════════╗")
 	fmt.Println("║                COMBAT                ║")
 	fmt.Println("╠══════════════════════════════════════╣")
 
-	fmt.Printf("║  %-34s  ║\n", player.Name)
-	fmt.Printf("║  PV : %3d / %-3d                      ║\n",
-		player.HP,
-		player.MaxHP,
+	fmt.Printf("║  %-36s║\n", player.Name)
+	fmt.Printf("║  %-36s║\n",
+		fmt.Sprintf("PV : %d / %d", player.HP, player.MaxHP),
 	)
-	fmt.Printf("║  %-34s  ║\n", HealthBar(player.HP, player.MaxHP))
+	fmt.Printf("║  %-36s║\n",
+		fmt.Sprintf("Mana : %d / %d", player.MP, player.MaxMP),
+	)
+	fmt.Printf("║  %-36s║\n", HealthBar(player.HP, player.MaxHP))
 
 	fmt.Println("║                                      ║")
 
-	fmt.Printf("║  %-34s  ║\n", enemy.Name)
-	fmt.Printf("║  PV : %3d / %-3d                      ║\n",
-		enemy.HP,
-		enemy.MaxHP,
+	fmt.Printf("║  %-36s║\n", enemy.Name)
+	fmt.Printf("║  %-36s║\n",
+		fmt.Sprintf("PV : %d / %d", enemy.HP, enemy.MaxHP),
 	)
-	fmt.Printf("║  %-34s  ║\n", HealthBar(enemy.HP, enemy.MaxHP))
+	fmt.Printf("║  %-36s║\n", HealthBar(enemy.HP, enemy.MaxHP))
 
 	fmt.Println("╚══════════════════════════════════════╝")
 }
@@ -136,9 +135,13 @@ func PlayerTurn(player *characters.Character, enemy *Enemy) (bool, bool) {
 		switch choice {
 		case 1:
 			Attack(player, enemy)
+			time.Sleep(800 * time.Millisecond)
 			return false, false
 		case 2:
-			UseSkill(player, enemy)
+			if !UseSkill(player, enemy) {
+				continue
+			}
+			time.Sleep(800 * time.Millisecond)
 			return false, false
 		case 3:
 			Defend(player)
@@ -182,70 +185,87 @@ func UseMana(player *characters.Character, cost int) bool {
 	player.MP -= cost
 	return true
 }
-func UseSkill(player *characters.Character, enemy *Enemy) {
+func UseSkill(player *characters.Character, enemy *Enemy) bool {
 	var choice int
 
 	switch player.Class {
 	case "Gobelin":
 		fmt.Println("\n=== COMPÉTENCES GOBELIN ===")
-		fmt.Println("1. 🪙 Pile ou Face")
-		fmt.Println("2. 🔪 Coup Vicieux")
-		fmt.Println("3. 🎲 Dé Truqué")
+		fmt.Println("1. 🪙 Pile ou Face - 25 Mana")
+		fmt.Println("2. 🔪 Coup Vicieux - 30 Mana")
+		fmt.Println("3. 🎲 Dé Truqué - 30 Mana")
+		fmt.Println("0. Retour")
+		fmt.Printf("Mana : %d / %d\n", player.MP, player.MaxMP)
 		fmt.Print("> ")
 
 		fmt.Scan(&choice)
 
 		switch choice {
 		case 1:
-			GobelinSkill(player, enemy)
+			return GobelinSkill(player, enemy)
 		case 2:
-			GobelinCoupVicieux(player, enemy)
+			return GobelinCoupVicieux(player, enemy)
 		case 3:
-			GobelinDeTruque(player, enemy)
+			return GobelinDeTruque(player, enemy)
+		case 0:
+			return false
 		default:
 			fmt.Println("Choix invalide.")
+			return false
 		}
 
 	case "Vampire":
 		fmt.Println("\n=== COMPÉTENCES VAMPIRE ===")
-		fmt.Println("1. 🩸 Drain Vampirique")
-		fmt.Println("2. 🧛 Morsure")
-		fmt.Println("3. 🩸 Sacrifice Sanguin")
+		fmt.Println("1. 🩸 Drain Vampirique - 40 Mana")
+		fmt.Println("2. 🧛 Morsure - 30 Mana")
+		fmt.Println("3. 🩸 Sacrifice Sanguin - 35 Mana")
+		fmt.Println("0. Retour")
+		fmt.Printf("Mana : %d / %d\n", player.MP, player.MaxMP)
 		fmt.Print("> ")
 
 		fmt.Scan(&choice)
 
 		switch choice {
 		case 1:
-			VampireSkill(player, enemy)
+			return VampireSkill(player, enemy)
 		case 2:
-			VampireMorsure(player, enemy)
+			return VampireMorsure(player, enemy)
 		case 3:
-			VampireSacrifice(player, enemy)
+			return VampireSacrifice(player, enemy)
+		case 0:
+			return false
 		default:
 			fmt.Println("Choix invalide.")
+			return false
 		}
 
 	case "Berserker":
 		fmt.Println("\n=== COMPÉTENCES BERSERKER ===")
-		fmt.Println("1. 💢 Rage")
-		fmt.Println("2. 🪓 Exécution")
-		fmt.Println("3. 🔥 Frénésie")
+		fmt.Println("1. 💢 Rage - 25 Mana")
+		fmt.Println("2. 🪓 Exécution - 30 Mana")
+		fmt.Println("3. 🔥 Frénésie - 35 Mana")
+		fmt.Println("0. Retour")
+		fmt.Printf("Mana : %d / %d\n", player.MP, player.MaxMP)
 		fmt.Print("> ")
 
 		fmt.Scan(&choice)
 
 		switch choice {
 		case 1:
-			BerserkerSkill(player, enemy)
+			return BerserkerSkill(player, enemy)
 		case 2:
-			BerserkerExecution(player, enemy)
+			return BerserkerExecution(player, enemy)
 		case 3:
-			BerserkerFrenesie(player, enemy)
+			return BerserkerFrenesie(player, enemy)
+		case 0:
+			return false
 		default:
 			fmt.Println("Choix invalide.")
+			return false
 		}
 	}
+
+	return false
 }
 func ShowEnemyLore(enemyName string) {
 	switch enemyName {
@@ -280,6 +300,8 @@ func EnemyTurn(player *characters.Character, enemy *Enemy, defending bool) {
 
 	fmt.Printf("\n👹 %s attaque !\n", enemy.Name)
 	fmt.Printf("Vous perdez %d PV.\n", damage)
+	time.Sleep(800 * time.Millisecond)
+
 }
 
 func EndCombat(player *characters.Character, enemy *Enemy) {
